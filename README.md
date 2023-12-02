@@ -1,5 +1,5 @@
 # PPGrad
-C++ &amp; OpenMPI &amp; OpenMP toy framework for Neural Nets (a la Micrograd)
+C++ &amp; OpenMPI &amp; OpenMP toy framework for Neural Nets (a la [Micrograd](https://github.com/karpathy/micrograd))
 
 # Initial Plan
 
