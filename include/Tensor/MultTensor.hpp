@@ -19,7 +19,11 @@ namespace PPGrad {
         {
             this->inputA = inputA;
             this->inputB = inputB;
-            this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(*inputA->getData() * *inputB->getData());
+            Eigen::array<Eigen::IndexPair<int>, 1> contractionPair = {Eigen::IndexPair<int>(Dim-1, 0)};
+            Eigen::Tensor<DT, 2 * (Dim - 1)> contractionResult = inputA->getData()->contract(*inputB->getData(), contractionPair);
+            this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(contractionResult);
+            this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>(inputA->getData()->dimensions()[0], inputB->getData()->dimensions()[1]));
+            this->gradient->setZero();
         }
 
         /// @brief Construct a new AddTensor object from two tensors intended to be added & allow enable/disable gradient accumulation.
@@ -30,7 +34,11 @@ namespace PPGrad {
         {
             this->inputA = inputA;
             this->inputB = inputB;
-            this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(*inputA->getData() * *inputB->getData());
+            Eigen::array<Eigen::IndexPair<int>, 1> contractionPair = {Eigen::IndexPair<int>(Dim-1, 0)};
+            Eigen::Tensor<DT, 2 * (Dim - 1)> contractionResult = inputA->getData()->contract(*inputB->getData(), contractionPair);
+            this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(contractionResult);
+            this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>(inputA->getData()->dimensions()[0], inputB->getData()->dimensions()[1]));
+            this->gradient->setZero();
             this->requiresGrad = requiresGrad;
         }
 

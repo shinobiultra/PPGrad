@@ -22,6 +22,8 @@ namespace PPGrad {
                 this->inputA = inputA;
                 this->inputB = inputB;
                 this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(*inputA->getData() * inputB);
+                this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>(inputA->getData()->dimensions()));
+                this->gradient->setZero();
             }
     
             /// @brief Construct a new MultTensor object from two tensors intended to be multiplied & allow enable/disable gradient accumulation.
@@ -33,6 +35,8 @@ namespace PPGrad {
                 this->inputA = inputA;
                 this->inputB = inputB;
                 this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(*inputA->getData() * inputB);
+                this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>(inputA->getData()->dimensions()));
+                this->gradient->setZero();
                 this->requiresGrad = requiresGrad;
             }
     

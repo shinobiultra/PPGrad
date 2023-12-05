@@ -68,44 +68,5 @@ namespace PPGrad
 
         /// @brief Accumulate the gradient of this tensor (intended to be called during backpropagation from nodes "upstream")
         void addGrad(std::shared_ptr<Eigen::Tensor<DT, Dim>> grad) override;
-
-        // Tensor-Tensor operations
-
-        /// @brief Operator overload for adding two tensors with correct gradient accumulation.
-        /// @param other The other tensor to add.
-        /// @return AddTensor<Dim, DT> The result of the addition with proper backward() implementation.
-        std::shared_ptr<TensorBase<Dim, DT>> operator+(std::shared_ptr<TensorBase<Dim, DT>> other) override;
-
-        /// @brief Operator overload for subtracting two tensors with correct gradient accumulation.
-        /// @param other The other tensor to subtract.
-        /// @return SubTensor<Dim, DT> The result of the subtraction with proper backward() implementation.
-        std::shared_ptr<TensorBase<Dim, DT>> operator-(std::shared_ptr<TensorBase<Dim, DT>> other) override;
-
-        /// @brief Operator overload for multiplying two tensors with correct gradient accumulation.
-        /// @param other The other tensor to multiply.
-        /// @return MultTensor<Dim, DT> The result of the multiplication with proper backward() implementation.
-        std::shared_ptr<TensorBase<Dim, DT>> operator*(std::shared_ptr<TensorBase<Dim, DT>> other) override;
-
-        // Scalar-Tensor operations
-
-        /// @brief Operator overload for adding a scalar to a tensor with correct gradient accumulation.
-        /// @param other The scalar to add.
-        /// @return AddTensor<Dim, DT> The result of the addition with proper backward() implementation.
-        std::shared_ptr<TensorBase<Dim, DT>> operator+(DT &other) override;
-
-        /// @brief Operator overload for subtracting a scalar from a tensor with correct gradient accumulation.
-        /// @param other The scalar to subtract.
-        /// @return SubTensor<Dim, DT> The result of the subtraction with proper backward() implementation.
-        std::shared_ptr<TensorBase<Dim, DT>> operator-(DT &other) override;
-
-        /// @brief Operator overload for multiplying a scalar with a tensor with correct gradient accumulation.
-        /// @param other The scalar to multiply.
-        /// @return MultTensor<Dim, DT> The result of the multiplication with proper backward() implementation.
-        std::shared_ptr<TensorBase<Dim, DT>> operator*(DT &other) override;
-
-        /// @brief Operator overload for dividing a tensor by a scalar with correct gradient accumulation.
-        /// @param other The scalar to divide by.
-        /// @return DivTensor<Dim, DT> The result of the division with proper backward() implementation.
-        std::shared_ptr<TensorBase<Dim, DT>> operator/(DT &other) override;
     };
 }

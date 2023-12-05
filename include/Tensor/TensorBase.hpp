@@ -42,47 +42,56 @@ namespace PPGrad {
             /// @brief Accumulate the gradient of this tensor (intended to be called during backpropagation from nodes "upstream")
             virtual void addGrad(std::shared_ptr<Eigen::Tensor<DT, Dim>> grad) = 0;
 
-            /// @brief Get the gradient of this tensor.
             virtual std::shared_ptr<Eigen::Tensor<DT, Dim>> getGrad() {
                 return this->gradient;
             }
-            // Tensor-Tensor operations
-            
-            /// @brief Operator overload for adding two tensors with correct gradient accumulation.
-            /// @param other The other tensor to add.
-            /// @return AddTensor<Dim, DT> The result of the addition with proper backward() implementation.
-            virtual std::shared_ptr<TensorBase<Dim, DT>> operator+(std::shared_ptr<TensorBase<Dim, DT>> other) = 0;
-
-            /// @brief Operator overload for subtracting two tensors with correct gradient accumulation.
-            /// @param other The other tensor to subtract.
-            /// @return SubTensor<Dim, DT> The result of the subtraction with proper backward() implementation.
-            virtual std::shared_ptr<TensorBase<Dim, DT>>operator-(std::shared_ptr<TensorBase<Dim, DT>> other) = 0;
-
-            /// @brief Operator overload for multiplying two tensors with correct gradient accumulation.
-            /// @param other The other tensor to multiply.
-            /// @return MultTensor<Dim, DT> The result of the multiplication with proper backward() implementation.
-            virtual std::shared_ptr<TensorBase<Dim, DT>> operator*(std::shared_ptr<TensorBase<Dim, DT>> other) = 0;
-
-            // Scalar-Tensor operations
-
-            /// @brief Operator overload for adding a scalar to a tensor with correct gradient accumulation.
-            /// @param other The scalar to add.
-            /// @return AddTensor<Dim, DT> The result of the addition with proper backward() implementation.
-            virtual std::shared_ptr<TensorBase<Dim, DT>> operator+(DT& other) = 0;
-            
-            /// @brief Operator overload for subtracting a scalar from a tensor with correct gradient accumulation.
-            /// @param other The scalar to subtract.
-            /// @return SubTensor<Dim, DT> The result of the subtraction with proper backward() implementation.
-            virtual std::shared_ptr<TensorBase<Dim, DT>> operator-(DT& other) = 0;
-            
-            /// @brief Operator overload for multiplying a scalar with a tensor with correct gradient accumulation.
-            /// @param other The scalar to multiply.
-            /// @return MultTensor<Dim, DT> The result of the multiplication with proper backward() implementation.
-            virtual std::shared_ptr<TensorBase<Dim, DT>> operator*(DT& other) = 0;
-            
-            /// @brief Operator overload for dividing a tensor by a scalar with correct gradient accumulation.
-            /// @param other The scalar to divide by.
-            /// @return DivTensor<Dim, DT> The result of the division with proper backward() implementation.
-            virtual std::shared_ptr<TensorBase<Dim, DT>> operator/(DT& other) = 0;
     };
+
+    // Operator overloads for std::shared_ptr<TensorBase<Dim, DT>>.
+
+    // Tensor-Tensor operations
+            
+    /// @brief Operator overload for adding two tensors with correct gradient accumulation.
+    /// @param other The other tensor to add.
+    /// @return AddTensor<Dim, DT> The result of the addition with proper backward() implementation.
+    template<int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>> operator+(std::shared_ptr<TensorBase<Dim, DT>> a, std::shared_ptr<TensorBase<Dim, DT>> b);
+
+    /// @brief Operator overload for subtracting two tensors with correct gradient accumulation.
+    /// @param other The other tensor to subtract.
+    /// @return SubTensor<Dim, DT> The result of the subtraction with proper backward() implementation.
+    template<int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>>operator-(std::shared_ptr<TensorBase<Dim, DT>> a, std::shared_ptr<TensorBase<Dim, DT>> b);
+
+    /// @brief Operator overload for multiplying two tensors with correct gradient accumulation.
+    /// @param other The other tensor to multiply.
+    /// @return MultTensor<Dim, DT> The result of the multiplication with proper backward() implementation.
+    template<int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>> operator*(std::shared_ptr<TensorBase<Dim, DT>> a, std::shared_ptr<TensorBase<Dim, DT>> b);
+
+    // Scalar-Tensor operations
+
+    /// @brief Operator overload for adding a scalar to a tensor with correct gradient accumulation.
+    /// @param other The scalar to add.
+    /// @return AddTensor<Dim, DT> The result of the addition with proper backward() implementation.
+    template<int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>> operator+(std::shared_ptr<TensorBase<Dim, DT>> a, DT other);
+    
+    /// @brief Operator overload for subtracting a scalar from a tensor with correct gradient accumulation.
+    /// @param other The scalar to subtract.
+    /// @return SubTensor<Dim, DT> The result of the subtraction with proper backward() implementation.
+    template<int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>> operator-(std::shared_ptr<TensorBase<Dim, DT>> a, DT other);
+    
+    /// @brief Operator overload for multiplying a scalar with a tensor with correct gradient accumulation.
+    /// @param other The scalar to multiply.
+    /// @return MultTensor<Dim, DT> The result of the multiplication with proper backward() implementation.
+    template<int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>> operator*(std::shared_ptr<TensorBase<Dim, DT>> a, DT other);
+    
+    /// @brief Operator overload for dividing a tensor by a scalar with correct gradient accumulation.
+    /// @param other The scalar to divide by.
+    /// @return DivTensor<Dim, DT> The result of the division with proper backward() implementation.
+    template<int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>> operator/(std::shared_ptr<TensorBase<Dim, DT>> a, DT other);
 }
