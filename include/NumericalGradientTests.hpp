@@ -23,6 +23,7 @@ double LSumMult(std::vector<Eigen::Tensor<double, 2>> inputTensors);
 
 /// @brief Function that interleaves addition & multiplication of tensors, intended for testing gradients. Calls _bakcward() on each tensor manually.
 /// @param inputTensors Tensors to add and multiply.
+/// @param autoBackward Whether or not to call _backward() on each tensor automatically.
 /// @return Vector of intermediate tensors.
 std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMult(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors, bool autoBackward = false);
 
@@ -33,5 +34,18 @@ double LSumMixed(std::vector<Eigen::Tensor<double, 2>> inputTensors);
 
 /// @brief Function for thoroughly testing gradients.
 /// @param inputTensors Tensors to add, multiply and scalar multiply/divide.
+/// @param autoBackward Whether or not to call _backward() on each tensor automatically.
 /// @return Vector of intermediate tensors.
 std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMixed(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors, bool autoBackward = false);
+
+
+/// @brief Multiply Tensors (T[i] * T[i+1]) with some scalar addition sparkled in and sum the result.
+/// @param inputTensors Tensors to multiply.
+/// @return Sum of the final tensor.
+double LMultSumShapes(std::vector<Eigen::Tensor<double, 2>> inputTensors);
+
+/// @brief Multiply Tensors (T[i] * T[i+1]) with some scalar addition sparkled in and sum the result.
+/// @param inputTensors Tensors to multiply.
+/// @param autoBackward Whether or not to call _backward() on each tensor automatically.
+/// @return Vector of intermediate tensors.
+std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LMultSumShapes(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors, bool autoBackward = false);

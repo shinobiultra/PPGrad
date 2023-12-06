@@ -29,7 +29,7 @@ std::vector<Eigen::Tensor<double, 2>> estimateGradients(
 {
 
     std::vector<Eigen::Tensor<double, 2>> gradients;
-    double epsilon = 1e-7;
+    double epsilon = 1e-5;
 
     // Iterate over each tensor
     for (auto &tensor : inputTensors)
@@ -122,14 +122,17 @@ std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMult(std::vector
     // initialize gradient of the last tensor to 1
     resultTensors[resultTensors.size() - 1]->getGrad()->setConstant(1.0);
 
-    if (!autoBackward) {
+    if (!autoBackward)
+    {
         // call _backward on all tensors from the end
         for (int i = resultTensors.size() - 1; i >= 0; i--)
         {
             resultTensors[i]->_backward();
             inputTensors[i]->_backward();
         }
-    } else {
+    }
+    else
+    {
         PPGrad::TensorBase<2, double>::backward(resultTensors[resultTensors.size() - 1]);
     }
 
@@ -215,7 +218,8 @@ std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMixed(std::vecto
     // initialize gradient of the last tensor to 1
     resultTensors[resultTensors.size() - 1]->getGrad()->setConstant(1.0);
 
-    if (!autoBackward) {
+    if (!autoBackward)
+    {
         // call _backward on all tensors from the end
         for (int i = inputTensors.size() - 1; i >= 0; i--)
         {
@@ -228,7 +232,81 @@ std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMixed(std::vecto
 
             inputTensors[i]->_backward();
         }
-    } else {
+    }
+    else
+    {
+        PPGrad::TensorBase<2, double>::backward(resultTensors[resultTensors.size() - 1]);
+    }
+
+    return resultTensors;
+}
+
+// ----- LMultSumShapes (non uniform shapes) -----
+
+double LMultSumShapes(std::vector<Eigen::Tensor<double, 2>> inputTensors)
+{
+    Eigen::Tensor<double, 2> T = inputTensors[0];
+    const int numTensors = inputTensors.size();
+    for (int i = 1; i < numTensors; i++)
+    {
+        if (i % 2 == 0)
+        {
+            // contratc T with inputTensors[i]
+            Eigen::array<Eigen::IndexPair<int>, 1> contractionPair = {Eigen::IndexPair<int>(1, 0)};
+            Eigen::Tensor<double, 2> res = T.contract(inputTensors[i], contractionPair);
+            T = res;
+        }
+        else
+        {
+            // contratc T with inputTensors[i] + i
+            Eigen::array<Eigen::IndexPair<int>, 1> contractionPair = {Eigen::IndexPair<int>(1, 0)};
+            Eigen::Tensor<double, 2> res = T.contract(inputTensors[i] + (double)i, contractionPair);
+            T = res;
+        }
+    }
+    Eigen::Tensor<double, 0> tensorSum = T.sum();
+    return tensorSum();
+}
+
+std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LMultSumShapes(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors, bool autoBackward = false)
+{
+    std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> resultTensors;
+
+    std::shared_ptr<PPGrad::TensorBase<2, double>> T = inputTensors[0];
+    const int numTensors = inputTensors.size();
+    for (int i = 1; i < numTensors; i++)
+    {
+        if (i % 2 == 0)
+        {
+            std::shared_ptr<PPGrad::TensorBase<2, double>> Q = T * inputTensors[i];
+            resultTensors.push_back(Q);
+            resultTensors.push_back(Q);
+            T = Q;
+        }
+        else
+        {
+            std::shared_ptr<PPGrad::TensorBase<2, double>> Ii = (inputTensors[i] + (double)i);
+            std::shared_ptr<PPGrad::TensorBase<2, double>> Q = T * Ii;
+            resultTensors.push_back(Ii);
+            resultTensors.push_back(Q);
+            T = Q;
+        }
+    }
+
+    // initialize gradient of the last tensor to 1
+    resultTensors[resultTensors.size() - 1]->getGrad()->setConstant(1.0);
+
+    if (!autoBackward)
+    {
+        // debug manual backward
+        for (int j = inputTensors.size() - 1; j >= 0; j--)
+        {
+            resultTensors[j * 2]->_backward();
+            inputTensors[j]->_backward();
+        }
+    }
+    else
+    {
         PPGrad::TensorBase<2, double>::backward(resultTensors[resultTensors.size() - 1]);
     }
 
