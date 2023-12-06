@@ -54,6 +54,10 @@ tests: $(OBJ_FILES) $(TEST_OBJ_FILES)
 	$(CXX) $(CXXFLAGS) $(LDLIBS) $(LDTESTS) $^ -o $(BUILD_DIR)/test_suite.out
 	./$(BUILD_DIR)/test_suite.out
 
+# Run Doxygen
+doxygen:
+	doxygen Doxyfile
+
 # Clean up
 clean:
 	rm -rf $(BUILD_DIR)/*
