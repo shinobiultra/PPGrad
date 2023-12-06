@@ -2,16 +2,16 @@
 
 #include "Tensor/Tensor.hpp"
 
-namespace PPGrad {
-    template<int Dim, typename DT>
-    class MultTensor : public Tensor<Dim, DT> {
-
+namespace PPGrad
+{
+    template <int Dim, typename DT>
+    class MultTensor : public Tensor<Dim, DT>
+    {
 
     protected:
         std::shared_ptr<TensorBase<Dim, DT>> inputA, inputB; ///< The inputs to the addition operation. Result stored in `data`.
 
     public:
-
         /// @brief Construct a new AddTensor object from two tensors intended to be added.
         /// @param inputA The first input to the addition operation.
         /// @param inputB The second input to the addition operation.
@@ -19,7 +19,7 @@ namespace PPGrad {
         {
             this->inputA = inputA;
             this->inputB = inputB;
-            Eigen::array<Eigen::IndexPair<int>, 1> contractionPair = {Eigen::IndexPair<int>(Dim-1, 0)};
+            Eigen::array<Eigen::IndexPair<int>, 1> contractionPair = {Eigen::IndexPair<int>(Dim - 1, 0)};
             Eigen::Tensor<DT, 2 * (Dim - 1)> contractionResult = inputA->getData()->contract(*inputB->getData(), contractionPair);
             this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(contractionResult);
             this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>(inputA->getData()->dimensions()[0], inputB->getData()->dimensions()[1]));
@@ -34,7 +34,7 @@ namespace PPGrad {
         {
             this->inputA = inputA;
             this->inputB = inputB;
-            Eigen::array<Eigen::IndexPair<int>, 1> contractionPair = {Eigen::IndexPair<int>(Dim-1, 0)};
+            Eigen::array<Eigen::IndexPair<int>, 1> contractionPair = {Eigen::IndexPair<int>(Dim - 1, 0)};
             Eigen::Tensor<DT, 2 * (Dim - 1)> contractionResult = inputA->getData()->contract(*inputB->getData(), contractionPair);
             this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(contractionResult);
             this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>(inputA->getData()->dimensions()[0], inputB->getData()->dimensions()[1]));
@@ -43,6 +43,6 @@ namespace PPGrad {
         }
 
         /// @brief Calculate the gradient of this tensor with respect to it's inputs.
-        void backward() override;
+        void _backward() override;
     };
 }

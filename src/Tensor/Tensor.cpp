@@ -9,39 +9,39 @@
 
 #include <memory>
 
-namespace PPGrad {
+namespace PPGrad
+{
 
-    
-        /// @brief Backward will simply do nothing for raw Tensors as they are leaf nodes in backpropagation.
-        template <int Dim, typename DT>
-        void Tensor<Dim, DT>::backward() 
-        {
-            return;
-        }
+    /// @brief Backward will simply do nothing for raw Tensors as they are leaf nodes in backpropagation.
+    template <int Dim, typename DT>
+    void Tensor<Dim, DT>::_backward()
+    {
+        return;
+    }
 
-        /// @brief Get the underlying data of the tensor (of type T).
-        /// @details Will probably not be implemented outside of debugging.
-        /// @return The actual data.
-        template <int Dim, typename DT>
-        std::shared_ptr<Eigen::Tensor<DT, Dim>> Tensor<Dim, DT>::getData() 
-        {
-            return this->data;
-        }
+    /// @brief Get the underlying data of the tensor (of type T).
+    /// @details Will probably not be implemented outside of debugging.
+    /// @return The actual data.
+    template <int Dim, typename DT>
+    std::shared_ptr<Eigen::Tensor<DT, Dim>> Tensor<Dim, DT>::getData()
+    {
+        return this->data;
+    }
 
-        /// @brief Zero out the gradient of this tensor.
-        template <int Dim, typename DT>
-        void Tensor<Dim, DT>::zeroGrad() 
-        {
-            this->gradient->setZero();
-        }
+    /// @brief Zero out the gradient of this tensor.
+    template <int Dim, typename DT>
+    void Tensor<Dim, DT>::zeroGrad()
+    {
+        this->gradient->setZero();
+    }
 
-        /// @brief Accumulate the gradient of this tensor (intended to be called during backpropagation from nodes "upstream")
-        template <int Dim, typename DT>
-        void Tensor<Dim, DT>::addGrad(std::shared_ptr<Eigen::Tensor<DT, Dim>> grad) 
-        {
-            *this->gradient += *grad;
-        }
-        
+    /// @brief Accumulate the gradient of this tensor (intended to be called during backpropagation from nodes "upstream")
+    template <int Dim, typename DT>
+    void Tensor<Dim, DT>::addGrad(std::shared_ptr<Eigen::Tensor<DT, Dim>> grad)
+    {
+        *this->gradient += *grad;
+    }
+
     // Explicit template instantiations
-    template class Tensor<2, double>; // Used in tests  
+    template class Tensor<2, double>; // Used in tests
 }

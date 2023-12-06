@@ -2,11 +2,12 @@
 
 #include <eigen3/unsupported/Eigen/CXX11/Tensor>
 
-namespace PPGrad {
+namespace PPGrad
+{
 
     /// @brief Calculate the gradient of this tensor with respect to it's inputs.
     template <int Dim, typename DT>
-    void SubSTensor<Dim, DT>::backward()
+    void SubSTensor<Dim, DT>::_backward()
     {
         // C = A - B
         // dC/dA = 1 (shape of A)

@@ -2,18 +2,17 @@
 
 #include "Tensor/Tensor.hpp"
 
-
-namespace PPGrad {
-    template<int Dim, typename DT>
-    class DivSTensor : public Tensor<Dim, DT> {
-
+namespace PPGrad
+{
+    template <int Dim, typename DT>
+    class DivSTensor : public Tensor<Dim, DT>
+    {
 
     protected:
         std::shared_ptr<TensorBase<Dim, DT>> inputA; ///< The inputs to the division operation. Result stored in `data`.
-        DT inputB; ///< The inputs to the division operation. Result stored in `data`.
+        DT inputB;                                   ///< The inputs to the division operation. Result stored in `data`.
 
     public:
-
         /// @brief Construct a new DivTensor object from two tensors intended to be divided.
         /// @param inputA The first input to the division operation.
         /// @param inputB The second input to the division operation.
@@ -22,6 +21,8 @@ namespace PPGrad {
             this->inputA = inputA;
             this->inputB = inputB;
             this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(*inputA->getData() / inputB);
+            this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>(inputA->getData()->dimensions()));
+            this->gradient->setZero();
         }
 
         /// @brief Construct a new DivTensor object from two tensors intended to be divided & allow enable/disable gradient accumulation.
@@ -33,10 +34,12 @@ namespace PPGrad {
             this->inputA = inputA;
             this->inputB = inputB;
             this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(*inputA->getData() / inputB);
+            this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>(inputA->getData()->dimensions()));
+            this->gradient->setZero();
             this->requiresGrad = requiresGrad;
         }
 
         /// @brief Calculate the gradient of this tensor with respect to it's inputs.
-        void backward() override;
+        void _backward() override;
     };
 }

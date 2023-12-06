@@ -2,17 +2,17 @@
 
 #include "Tensor/Tensor.hpp"
 
-namespace PPGrad {
-    template<int Dim, typename DT>
-    class SubSTensor : public Tensor<Dim, DT> {
-
+namespace PPGrad
+{
+    template <int Dim, typename DT>
+    class SubSTensor : public Tensor<Dim, DT>
+    {
 
     protected:
         std::shared_ptr<TensorBase<Dim, DT>> inputA; ///< The inputs to the subtraction operation. Result stored in `data`.
-        DT inputB; ///< The inputs to the subtraction operation. Result stored in `data`.
+        DT inputB;                                   ///< The inputs to the subtraction operation. Result stored in `data`.
 
     public:
-
         /// @brief Construct a new SubTensor object from two tensors intended to be subtracted.
         /// @param inputA The first input to the subtraction operation.
         /// @param inputB The second input to the subtraction operation.
@@ -36,6 +36,6 @@ namespace PPGrad {
         }
 
         /// @brief Calculate the gradient of this tensor with respect to it's inputs.
-        void backward() override;
+        void _backward() override;
     };
 }

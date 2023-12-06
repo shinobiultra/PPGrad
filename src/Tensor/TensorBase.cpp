@@ -10,49 +10,56 @@
 
 #include <memory>
 
-namespace PPGrad {
+namespace PPGrad
+{
 
-    template<int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> operator+(std::shared_ptr<TensorBase<Dim, DT>> a, std::shared_ptr<TensorBase<Dim, DT>> b) {
+    template <int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>> operator+(std::shared_ptr<TensorBase<Dim, DT>> a, std::shared_ptr<TensorBase<Dim, DT>> b)
+    {
         bool requiresGrad = a->getRequiresGrad() || b->getRequiresGrad();
         return std::make_shared<AddTensor<Dim, DT>>(a, b, requiresGrad);
     }
 
-    template<int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>>operator-(std::shared_ptr<TensorBase<Dim, DT>> a, std::shared_ptr<TensorBase<Dim, DT>> b) {
+    template <int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>> operator-(std::shared_ptr<TensorBase<Dim, DT>> a, std::shared_ptr<TensorBase<Dim, DT>> b)
+    {
         bool requiresGrad = a->getRequiresGrad() || b->getRequiresGrad();
         return std::make_shared<SubTensor<Dim, DT>>(a, b, requiresGrad);
     }
 
-    template<int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> operator*(std::shared_ptr<TensorBase<Dim, DT>> a, std::shared_ptr<TensorBase<Dim, DT>> b) {
+    template <int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>> operator*(std::shared_ptr<TensorBase<Dim, DT>> a, std::shared_ptr<TensorBase<Dim, DT>> b)
+    {
         bool requiresGrad = a->getRequiresGrad() || b->getRequiresGrad();
         return std::make_shared<MultTensor<Dim, DT>>(a, b, requiresGrad);
     }
 
     // Scalar-Tensor operations
 
-    template<int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> operator+(std::shared_ptr<TensorBase<Dim, DT>> a, DT other) {
+    template <int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>> operator+(std::shared_ptr<TensorBase<Dim, DT>> a, DT other)
+    {
         bool requiresGrad = a->getRequiresGrad();
         return std::make_shared<AddSTensor<Dim, DT>>(a, other, requiresGrad);
     }
 
-    template<int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> operator-(std::shared_ptr<TensorBase<Dim, DT>> a, DT other) {
+    template <int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>> operator-(std::shared_ptr<TensorBase<Dim, DT>> a, DT other)
+    {
         bool requiresGrad = a->getRequiresGrad();
         return std::make_shared<SubSTensor<Dim, DT>>(a, other, requiresGrad);
     }
 
-    template<int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> operator*(std::shared_ptr<TensorBase<Dim, DT>> a, DT other) {
+    template <int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>> operator*(std::shared_ptr<TensorBase<Dim, DT>> a, DT other)
+    {
         bool requiresGrad = a->getRequiresGrad();
         return std::make_shared<MultSTensor<Dim, DT>>(a, other, requiresGrad);
     }
 
-
-    template<int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> operator/(std::shared_ptr<TensorBase<Dim, DT>> a, DT other) {
+    template <int Dim, typename DT>
+    std::shared_ptr<TensorBase<Dim, DT>> operator/(std::shared_ptr<TensorBase<Dim, DT>> a, DT other)
+    {
         bool requiresGrad = a->getRequiresGrad();
         return std::make_shared<DivSTensor<Dim, DT>>(a, other, requiresGrad);
     }

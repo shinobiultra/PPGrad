@@ -45,6 +45,6 @@ namespace PPGrad
         }
 
         /// @brief Calculate the gradient of this tensor with respect to it's inputs.
-        void backward() override;
+        void _backward() override;
     };
 }

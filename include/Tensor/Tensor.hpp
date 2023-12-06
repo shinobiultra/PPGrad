@@ -4,7 +4,6 @@
 
 #include "Tensor/TensorBase.hpp"
 
-
 namespace PPGrad
 {
 
@@ -56,7 +55,7 @@ namespace PPGrad
         }
 
         /// @brief Backward will simply do nothing for raw Tensors as they are leaf nodes in backpropagation.
-        void backward() override;
+        void _backward() override;
 
         /// @brief Get the underlying data of the tensor (of type T).
         /// @details Will probably not be implemented outside of debugging.
