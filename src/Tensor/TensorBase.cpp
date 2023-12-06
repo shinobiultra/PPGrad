@@ -1,7 +1,6 @@
 
 /** @file */
 
-
 #include "Tensor/TensorBase.hpp"
 #include "Tensor/Tensor.hpp"
 #include "Tensor/AddTensor.hpp"
@@ -20,9 +19,11 @@ namespace PPGrad
 
     /// @brief Calculate the gradient of this tensor with respect to it's inputs.
     template <int Dim, typename DT>
-    void TensorBase<Dim, DT>::bakcward() {
-        std::stack<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> sortedNodes = topologicalSort<Dim, DT>();
-        while (!sortedNodes.empty()) {
+    void TensorBase<Dim, DT>::backward(std::shared_ptr<PPGrad::TensorBase<Dim, DT>> root)
+    {
+        std::stack<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> sortedNodes = topologicalSort<Dim, DT>(root);
+        while (!sortedNodes.empty())
+        {
             sortedNodes.top()->_backward();
             sortedNodes.pop();
         }
@@ -87,4 +88,7 @@ namespace PPGrad
     template std::shared_ptr<TensorBase<2, double>> operator-(std::shared_ptr<TensorBase<2, double>> a, double b);
     template std::shared_ptr<TensorBase<2, double>> operator*(std::shared_ptr<TensorBase<2, double>> a, double b);
     template std::shared_ptr<TensorBase<2, double>> operator/(std::shared_ptr<TensorBase<2, double>> a, double b);
+
+    // explicit bakward() template instantiations
+    template void TensorBase<2, double>::backward(std::shared_ptr<PPGrad::TensorBase<2, double>> root);
 } // namespace PPGrad

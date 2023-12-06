@@ -96,7 +96,7 @@ double LSumMult(std::vector<Eigen::Tensor<double, 2>> inputTensors)
     return tensorSum();
 }
 
-std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMult(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors)
+std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMult(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors, bool autoBackward = false)
 {
     std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> resultTensors;
 
@@ -122,11 +122,15 @@ std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMult(std::vector
     // initialize gradient of the last tensor to 1
     resultTensors[resultTensors.size() - 1]->getGrad()->setConstant(1.0);
 
-    // call _backward on all tensors from the end
-    for (int i = resultTensors.size() - 1; i >= 0; i--)
-    {
-        resultTensors[i]->_backward();
-        inputTensors[i]->_backward();
+    if (!autoBackward) {
+        // call _backward on all tensors from the end
+        for (int i = resultTensors.size() - 1; i >= 0; i--)
+        {
+            resultTensors[i]->_backward();
+            inputTensors[i]->_backward();
+        }
+    } else {
+        PPGrad::TensorBase<2, double>::backward(resultTensors[resultTensors.size() - 1]);
     }
 
     return resultTensors;
@@ -167,7 +171,7 @@ double LSumMixed(std::vector<Eigen::Tensor<double, 2>> inputTensors)
     return tensorSum();
 }
 
-std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMixed(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors)
+std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMixed(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors, bool autoBackward = false)
 {
     std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> resultTensors;
 
@@ -211,17 +215,21 @@ std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMixed(std::vecto
     // initialize gradient of the last tensor to 1
     resultTensors[resultTensors.size() - 1]->getGrad()->setConstant(1.0);
 
-    // call _backward on all tensors from the end
-    for (int i = inputTensors.size() - 1; i >= 0; i--)
-    {
-        int resultTensorIndex = i * 2 + 1;
-        resultTensors[resultTensorIndex]->_backward();
-        if (i % 4 == 3 || i % 4 == 2)
+    if (!autoBackward) {
+        // call _backward on all tensors from the end
+        for (int i = inputTensors.size() - 1; i >= 0; i--)
         {
-            resultTensors[resultTensorIndex - 1]->_backward();
-        }
+            int resultTensorIndex = i * 2 + 1;
+            resultTensors[resultTensorIndex]->_backward();
+            if (i % 4 == 3 || i % 4 == 2)
+            {
+                resultTensors[resultTensorIndex - 1]->_backward();
+            }
 
-        inputTensors[i]->_backward();
+            inputTensors[i]->_backward();
+        }
+    } else {
+        PPGrad::TensorBase<2, double>::backward(resultTensors[resultTensors.size() - 1]);
     }
 
     return resultTensors;

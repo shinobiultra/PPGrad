@@ -3,6 +3,7 @@
 
 
 #pragma once
+#include "Tensor/TensorBase.hpp"
 #include <eigen3/unsupported/Eigen/CXX11/Tensor>
 #include <vector>
 #include <memory>
@@ -20,10 +21,10 @@ std::vector<Eigen::Tensor<double, 2>> estimateGradients(
 /// @return Sum of the final tensor.
 double LSumMult(std::vector<Eigen::Tensor<double, 2>> inputTensors);
 
-/// @brief Function that interleaves addition & multiplication of tensors, intended for testing gradients. Calls bakcward() on each tensor manually.
+/// @brief Function that interleaves addition & multiplication of tensors, intended for testing gradients. Calls _bakcward() on each tensor manually.
 /// @param inputTensors Tensors to add and multiply.
 /// @return Vector of intermediate tensors.
-std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMult(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors);
+std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMult(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors, bool autoBackward = false);
 
 /// @brief Function for thoroughly testing gradients.
 /// @param inputTensors Tensors to add, multiply and scalar multiply/divide.
@@ -33,4 +34,4 @@ double LSumMixed(std::vector<Eigen::Tensor<double, 2>> inputTensors);
 /// @brief Function for thoroughly testing gradients.
 /// @param inputTensors Tensors to add, multiply and scalar multiply/divide.
 /// @return Vector of intermediate tensors.
-std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMixed(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors);
+std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMixed(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors, bool autoBackward = false);

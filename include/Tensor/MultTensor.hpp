@@ -46,6 +46,8 @@ namespace PPGrad
             this->requiresGrad = requiresGrad;
         }
 
+        std::vector <std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> getParents() override;
+
         /// @brief Calculate the gradient of this tensor with respect to it's inputs.
         void _backward() override;
     };

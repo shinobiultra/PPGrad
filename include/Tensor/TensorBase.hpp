@@ -41,7 +41,7 @@ namespace PPGrad
         }
 
         /// @brief Topologically order all parents of this tensor and call _backward() on them.
-        void bakcward();
+        static void backward(std::shared_ptr<PPGrad::TensorBase<Dim, DT>> root);
 
         /// @brief Calculate the gradient of this tensor with respect to it's inputs.
         virtual void _backward() = 0;

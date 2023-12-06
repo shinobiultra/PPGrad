@@ -480,3 +480,47 @@ TEST(MixedTensorTest, GradientPropagationManual)
         }
     }
 }
+
+
+TEST(MixedTensorTest, GradientPropagationAutomatic)
+{
+    // Instantiate N random tensors
+    const int N = 32;
+    std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> tensors;
+    std::vector<Eigen::Tensor<double, 2>> eigenTensors;
+    for (int i = 0; i < N; i++)
+    {
+        Eigen::Tensor<double, 2> aT(5, 5);
+        aT.setRandom();
+        std::shared_ptr<PPGrad::TensorBase<2, double>> a = std::make_shared<PPGrad::Tensor<2, double>>(std::make_shared<Eigen::Tensor<double, 2>>(aT), true);
+        tensors.push_back(a);
+        eigenTensors.push_back(aT);
+    }
+
+    // Run PPGrad Tensors through our test function `LSum`
+    std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> resultTensors = LSumMixed(tensors);
+
+    // Run numerical gradient estimation on the same function
+    std::vector<Eigen::Tensor<double, 2>> numericalGradients = estimateGradients(eigenTensors, [](const std::vector<Eigen::Tensor<double, 2>> &eTensors)
+                                                                                 { return LSumMixed(eTensors); });
+
+    // make sure the result (sum of tensors) is correct
+    Eigen::Tensor<double, 0> resultOur = resultTensors[resultTensors.size() - 1]->getData()->sum();
+    double resultNumerical = LSumMixed(eigenTensors);
+    EXPECT_NEAR(resultOur(), resultNumerical, 1e-5);
+
+    // Compare the gradients
+    for (int i = 0; i < N; i++)
+    {
+        Eigen::Tensor<double, 2> grad = *tensors[i]->getGrad();
+        Eigen::Tensor<double, 2> numericalGrad = numericalGradients[i];
+
+        for (int j = 0; j < grad.dimensions()[0]; j++)
+        {
+            for (int k = 0; k < grad.dimensions()[1]; k++)
+            {
+                EXPECT_NEAR(grad(j, k), numericalGrad(j, k), 1e-5);
+            }
+        }
+    }
+}

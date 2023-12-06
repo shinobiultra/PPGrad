@@ -33,6 +33,14 @@ namespace PPGrad
         }
     }
 
+    template <int Dim, typename DT>
+    std::vector <std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> AddTensor<Dim, DT>::getParents() {
+        std::vector <std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> parents;
+        parents.push_back(this->inputA);
+        parents.push_back(this->inputB);
+        return parents;
+    }
+
     // Explicit instantiations
     template class AddTensor<2, double>; // used in tests
 }

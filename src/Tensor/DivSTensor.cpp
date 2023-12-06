@@ -23,6 +23,13 @@ namespace PPGrad
         }
     }
 
+    template <int Dim, typename DT>
+    std::vector <std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> DivSTensor<Dim, DT>::getParents() {
+        std::vector <std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> parents;
+        parents.push_back(this->inputA);
+        return parents;
+    }
+
     // Explicit instantiations
     template class DivSTensor<2, double>; // used in tests
 }
