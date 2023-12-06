@@ -23,8 +23,6 @@ namespace PPGrad
         Tensor()
         {
             this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>());
-            this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>());
-            this->gradient->setZero();
         }
 
         /// @brief Construct a new Tensor object
@@ -32,8 +30,6 @@ namespace PPGrad
         Tensor(std::shared_ptr<Eigen::Tensor<DT, Dim>> data)
         {
             this->data = data;
-            this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>(data->dimensions()));
-            this->gradient->setZero();
         }
 
         /// @brief Construct zero-initialized Tensor and allow enable/disable gradient accumulation.

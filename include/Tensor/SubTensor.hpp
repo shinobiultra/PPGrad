@@ -24,8 +24,6 @@ namespace PPGrad
             this->inputA = inputA;
             this->inputB = inputB;
             this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(*inputA->getData() - *inputB->getData());
-            this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>(inputA->getData()->dimensions()));
-            this->gradient->setZero();
         }
 
         /// @brief Construct a new AddTensor object from two tensors intended to be added & allow enable/disable gradient accumulation.
