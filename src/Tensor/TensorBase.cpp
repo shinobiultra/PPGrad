@@ -11,11 +11,22 @@
 #include "Tensor/SubSTensor.hpp"
 #include "Tensor/MultSTensor.hpp"
 #include "Tensor/DivSTensor.hpp"
-
+#include "TopologicalSort.hpp"
 #include <memory>
+#include <stack>
 
 namespace PPGrad
 {
+
+    /// @brief Calculate the gradient of this tensor with respect to it's inputs.
+    template <int Dim, typename DT>
+    void TensorBase<Dim, DT>::bakcward() {
+        std::stack<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> sortedNodes = topologicalSort<Dim, DT>();
+        while (!sortedNodes.empty()) {
+            sortedNodes.top()->_backward();
+            sortedNodes.pop();
+        }
+    }
 
     template <int Dim, typename DT>
     std::shared_ptr<TensorBase<Dim, DT>> operator+(std::shared_ptr<TensorBase<Dim, DT>> a, std::shared_ptr<TensorBase<Dim, DT>> b)

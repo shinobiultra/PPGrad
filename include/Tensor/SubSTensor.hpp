@@ -25,6 +25,8 @@ namespace PPGrad
             this->inputA = inputA;
             this->inputB = inputB;
             this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(*inputA->getData() - inputB);
+            this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>(this->data->dimensions()));
+            this->gradient->setZero();
         }
 
         /// @brief Construct a new SubTensor object from two tensors intended to be subtracted & allow enable/disable gradient accumulation.
@@ -36,6 +38,8 @@ namespace PPGrad
             this->inputA = inputA;
             this->inputB = inputB;
             this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(*inputA->getData() - inputB);
+            this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>(this->data->dimensions()));
+            this->gradient->setZero();
             this->requiresGrad = requiresGrad;
         }
 

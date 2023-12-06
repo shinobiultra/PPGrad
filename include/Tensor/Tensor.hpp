@@ -1,7 +1,6 @@
 
 /** @file */
 
-
 #pragma once
 #include <eigen3/Eigen/Dense>
 #include <eigen3/unsupported/Eigen/CXX11/Tensor>
@@ -71,5 +70,11 @@ namespace PPGrad
 
         /// @brief Accumulate the gradient of this tensor (intended to be called during backpropagation from nodes "upstream")
         void addGrad(std::shared_ptr<Eigen::Tensor<DT, Dim>> grad) override;
+
+        /// @brief Raw Tensors are leaf nodes of the computational graph, thus have no parents.
+        virtual std::vector <std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> getParents() override
+        {
+            return std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>>();
+        }
     };
 }

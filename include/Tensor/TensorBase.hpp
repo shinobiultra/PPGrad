@@ -6,6 +6,7 @@
 #include <eigen3/Eigen/Dense>
 #include <eigen3/unsupported/Eigen/CXX11/Tensor>
 #include <memory>
+#include <vector>
 
 namespace PPGrad
 {
@@ -40,7 +41,7 @@ namespace PPGrad
         }
 
         /// @brief Topologically order all parents of this tensor and call _backward() on them.
-        // virtual void bakcward() = 0;
+        void bakcward();
 
         /// @brief Calculate the gradient of this tensor with respect to it's inputs.
         virtual void _backward() = 0;
@@ -51,10 +52,13 @@ namespace PPGrad
         /// @brief Accumulate the gradient of this tensor (intended to be called during backpropagation from nodes "upstream")
         virtual void addGrad(std::shared_ptr<Eigen::Tensor<DT, Dim>> grad) = 0;
 
-        virtual std::shared_ptr<Eigen::Tensor<DT, Dim>> getGrad()
+        std::shared_ptr<Eigen::Tensor<DT, Dim>> getGrad()
         {
             return this->gradient;
         }
+
+        /// @brief Get the parents of this tensor in the computation graph.
+        virtual std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> getParents() = 0;
     };
 
     // Operator overloads for std::shared_ptr<TensorBase<Dim, DT>>.
