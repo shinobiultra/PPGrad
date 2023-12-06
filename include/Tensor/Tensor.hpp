@@ -76,5 +76,42 @@ namespace PPGrad
         {
             return std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>>();
         }
+
+
+        // ------- Static methods ------- //
+
+        // ------------ Tensor generation ------------ //
+    
+        /// @brief Generate instance of `Tensor` zero initialized
+        /// @tparam DT Datatype of the underlying Eigen Tensor
+        /// @tparam Dim Number of dimensions of the Tensor
+        /// @param shape Shape of the Tensor
+        /// @return Shared pointer to the zero-initialized Tensor
+        static std::shared_ptr<TensorBase<Dim, DT>> zeros(std::array<int, Dim> shape);
+
+        /// @brief Generate instance of `Tensor` with random values sampled from normalized Normal distribution
+        /// @tparam DT Datatype of the underlying Eigen Tensor
+        /// @tparam Dim Number of dimensions of the Tensor
+        /// @param shape Shape of the Tensor
+        /// @return Shared pointer to the random Tensor
+        static std::shared_ptr<TensorBase<Dim, DT>> randn(std::array<int, Dim> shape);
+
+        /// @brief Generate instance of `Tensor` with random values from parametrized Normal Distribution
+        /// @tparam DT Datatype of the underlying Eigen Tensor
+        /// @tparam Dim Number of dimensions of the Tensor
+        /// @param shape Shape of the Tensor
+        /// @param mean Mean of the Normal distribution
+        /// @param stddev Standard deviation of the Normal distribution
+        /// @return Shared pointer to the random Tensor
+        static std::shared_ptr<TensorBase<Dim, DT>> randn(std::array<int, Dim> shape, DT mean, DT stddev);
+
+        /// @brief Generate instance of `Tensor` with 1s on the generalized diagonal (i.e., where all indices equal) and 0s elsewhere
+        /// @tparam DT Datatype of the underlying Eigen Tensor
+        /// @tparam Dim Number of dimensions of the Tensor
+        /// @param shape Shape of the Tensor
+        /// @return Shared pointer to the random Tensor
+        static std::shared_ptr<TensorBase<Dim, DT>> eye(std::array<int, Dim> shape);
+
+
     };
 }
