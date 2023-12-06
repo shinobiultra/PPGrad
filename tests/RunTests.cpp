@@ -498,7 +498,7 @@ TEST(MixedTensorTest, GradientPropagationAutomatic)
     }
 
     // Run PPGrad Tensors through our test function `LSum`
-    std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> resultTensors = LSumMixed(tensors);
+    std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> resultTensors = LSumMixed(tensors, true);
 
     // Run numerical gradient estimation on the same function
     std::vector<Eigen::Tensor<double, 2>> numericalGradients = estimateGradients(eigenTensors, [](const std::vector<Eigen::Tensor<double, 2>> &eTensors)
