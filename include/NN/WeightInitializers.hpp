@@ -104,15 +104,53 @@ namespace PPNN
         static void initXavier(std::shared_ptr<PPGrad::TensorBase<Dim, DT>> tensor)
         {
             XavierUniform<DT> xavierUniform(tensor->getData()->dimensions()[1], tensor->getData()->dimensions()[0]);
-            tensor->getData()->unaryExpr([&](DT /*x*/)
-                                         { return xavierUniform(); });
+            // tensor->getData()->unaryExpr([&](DT /*x*/)
+            //                              { return xavierUniform(); }); // `unaryExpr` seems to not be implemented or something
+            
+            // Manual (recursive due to Dim) initialization
+            std::array<int, Dim> indices;
+            std::function<void(int)> init = [&](int dim)
+            {
+                if (dim == Dim)
+                {
+                    (*tensor->getData())(indices) = xavierUniform();
+                }
+                else
+                {
+                    for (int i = 0; i < tensor->getData()->dimension(dim); i++)
+                    {
+                        indices[dim] = i;
+                        init(dim + 1);
+                    }
+                }
+            };
+            init(0);
         }
 
         static void initHe(std::shared_ptr<PPGrad::TensorBase<Dim, DT>> tensor)
         {
             He<DT> he(tensor->getData()->dimensions()[1]);
-            tensor->getData()->unaryExpr([&](DT /*x*/)
-                                         { return he(); });
+            // tensor->getData()->unaryExpr([&](DT /*x*/)
+            //                              { return he(); }); // `unaryExpr` seems to not be implemented or something
+            
+            // Manual (recursive due to Dim) initialization
+            std::array<int, Dim> indices;
+            std::function<void(int)> init = [&](int dim)
+            {
+                if (dim == Dim)
+                {
+                    (*tensor->getData())(indices) = he();
+                }
+                else
+                {
+                    for (int i = 0; i < tensor->getData()->dimension(dim); i++)
+                    {
+                        indices[dim] = i;
+                        init(dim + 1);
+                    }
+                }
+            };
+            init(0);
         }
     };
 }

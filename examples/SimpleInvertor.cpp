@@ -18,7 +18,7 @@
 #include <cmath>
 
 
-constexpr double learningRate = 0.0001;
+constexpr double LEARNING_RATE = 0.0001;
 constexpr double R = 10.0;
 
 
@@ -41,12 +41,12 @@ public:
         return dense->forward(inputs);
     }
 
-    std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> getParams()
+    std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>>& getParams()
     {
         return params;
     }
 
-    void setParams(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> params)
+    void setParams(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>>& params)
     {
         dense->setParams(params);
     }
@@ -59,7 +59,7 @@ int main()
     std::shared_ptr<InvertorNN> model = std::make_shared<InvertorNN>();
 
     // // Create optimizer
-    std::shared_ptr<PPNN::Optimizer<2, double>> optimizer = std::make_shared<PPNN::SGD<2, double>>(learningRate);
+    std::shared_ptr<PPNN::Optimizer<2, double>> optimizer = std::make_shared<PPNN::SGD<2, double>>(LEARNING_RATE);
 
     // // Create loss function
     std::shared_ptr<PPNN::Loss<2, double>> loss = std::make_shared<PPNN::MSE<2, double>>();
@@ -100,6 +100,9 @@ int main()
         std::shared_ptr<PPGrad::TensorBase<2, double>> prediction = model->forward({input})[0];
         std::cout << "Input: " << x << ", Prediction: " << (*prediction->getData())(0, 0) << ", Target: " << -x << std::endl;
     }
+
+    // Print out the single learned weight (which should be -1.0)
+    std::cout << "Learned weight: " << (*model->getParams()[0]->getData())(0, 0) << std::endl;
 
     return 0;
 }

@@ -37,7 +37,7 @@ namespace PPNN
 
             // Initialize the parameters
             WeightInitializer<Dim, DT>::init(W, initializer);
-            WeightInitializer<Dim, DT>::init(W, WeightInititializers::ZEROS);
+            WeightInitializer<Dim, DT>::init(b, WeightInititializers::ZEROS);
 
             params.push_back(W);
             params.push_back(b);
@@ -50,9 +50,9 @@ namespace PPNN
             std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> outputs;
             outputs.reserve(inputs.size());
 
-            for (std::shared_ptr<PPGrad::TensorBase<Dim, DT>>& input : inputs)
-            {
-                std::shared_ptr<PPGrad::TensorBase<Dim, DT>> output = W * input + b; // PPGrad magic!
+            for (std::shared_ptr<PPGrad::TensorBase<Dim, DT>> input : inputs)
+            {    
+                std::shared_ptr<PPGrad::TensorBase<Dim, DT>> output = (W * input) + b; // PPGrad magic!
                 outputs.push_back(output);
             }
             return outputs;
@@ -60,14 +60,14 @@ namespace PPNN
 
         /// @brief Return list of [trainable] parameters of the model (they shall contain the gradients after running backward() on each output produced by `forward()`).
         /// @return List of [trainable] parameters of the model.
-        std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> getParams() override
+        std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>>& getParams() override
         {
             return this->params;
         }
 
         /// @brief Set list of [trainable] parameters of the model (intended to contain updated parameters after running optimizer).
         /// @param params List of (updated) [trainable] parameters of the model (in order: W, b).
-        void setParams(std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> params) override
+        void setParams(std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>>& params) override
         {
             W = params[0];
             b = params[1];
