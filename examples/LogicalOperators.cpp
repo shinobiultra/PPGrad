@@ -72,6 +72,16 @@ public:
         return outputs;
     }
 
+    std::shared_ptr<PPGrad::TensorBase<2, double>> forward(std::shared_ptr<PPGrad::TensorBase<2, double>> input) override
+    {
+        std::shared_ptr<PPGrad::TensorBase<2, double>> output = input;
+        for (std::shared_ptr<PPNN::Dense<2, double>> layer : layers)
+        {
+            output = layer->forward(output);
+        }
+        return output;
+    }
+
     std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>>& getParams()
     {
         return params;
@@ -156,7 +166,7 @@ int main()
         double a = (double) (rand() % 2);
         double b = (double) (rand() % 2);
         input->getData()->setValues({{a}, {b}});
-        std::shared_ptr<PPGrad::TensorBase<2, double>> prediction = model->forward({input})[0];
+        std::shared_ptr<PPGrad::TensorBase<2, double>> prediction = model->forward(input);
         std::cout << "Input: " << a << ", " << b << ", Prediction: " << (*prediction->getData())(0, 0) << std::endl;
     }
 

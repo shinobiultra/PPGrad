@@ -41,6 +41,11 @@ public:
         return dense->forward(inputs);
     }
 
+    std::shared_ptr<PPGrad::TensorBase<2, double>> forward(std::shared_ptr<PPGrad::TensorBase<2, double>> input) override
+    {
+        return dense->forward(input);
+    }
+
     std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>>& getParams()
     {
         return params;
@@ -97,7 +102,7 @@ int main()
         Eigen::Tensor<double, 2> xT(1, 1);
         xT(0, 0) = x;
         std::shared_ptr<PPGrad::TensorBase<2, double>> input = std::make_shared<PPGrad::Tensor<2, double>>(std::make_shared<Eigen::Tensor<double, 2>>(xT));
-        std::shared_ptr<PPGrad::TensorBase<2, double>> prediction = model->forward({input})[0];
+        std::shared_ptr<PPGrad::TensorBase<2, double>> prediction = model->forward(input);
         std::cout << "Input: " << x << ", Prediction: " << (*prediction->getData())(0, 0) << ", Target: " << -x << std::endl;
     }
 

@@ -22,6 +22,11 @@ namespace PPNN
         /// @return Batch (vector) of output tensors produced by the model.
         virtual std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> forward(std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> inputs) = 0;
 
+        /// @brief Forward function of the model, intended to produce prediction for single input. Intended to be parallelized by OpenMP.
+        /// @param input Single input tensor intended for model prediction.
+        /// @return Single (vector) output tensors produced by the model.
+        virtual std::shared_ptr<PPGrad::TensorBase<Dim, DT>> forward(std::shared_ptr<PPGrad::TensorBase<Dim, DT>> inputs) = 0;
+
         /// @brief Return list of [trainable] parameters of the model (they shall contain the gradients after running backward() on each output produced by `forward()`).
         /// @return List of [trainable] parameters of the model.
         virtual std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>>& getParams() = 0;

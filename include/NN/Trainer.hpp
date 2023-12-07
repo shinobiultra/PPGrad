@@ -14,6 +14,9 @@
 namespace PPNN
 {
 
+    /// @brief A class for training PPNN neural network model with given optimizer and loss function.
+    /// @tparam DT Data type of the model.
+    /// @tparam Dim Dimension of the model's tensors.
     template <int Dim, typename DT>
     class Trainer
     {
