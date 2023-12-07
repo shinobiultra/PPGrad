@@ -69,7 +69,7 @@ namespace PPNN
 
                     std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> batchPredictions(batchSize);
 
-                    #pragma omp parallel for default(shared) num_threads(4)
+                    #pragma omp parallel for default(shared)
                     for (size_t batchIdx = batchStart; batchIdx < batchStart + batchSize; batchIdx++)
                     {
                         batchPredictions[batchIdx - batchStart] = model->forward(inputs[batchIdx]);
@@ -85,7 +85,7 @@ namespace PPNN
                     epochLosses.push_back(batchLoss);
 
                     // Call backward on each output produced by forward() to accumulate gradients in the parameters.
-                    #pragma omp parallel for default(shared) num_threads(4)
+                    #pragma omp parallel for default(shared)
                     for (std::shared_ptr<PPGrad::TensorBase<Dim, DT>>& prediction : batchPredictions)
                     {
                         PPGrad::TensorBase<Dim, DT>::backward(prediction);
