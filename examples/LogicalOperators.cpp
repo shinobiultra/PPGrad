@@ -11,6 +11,7 @@
 #include "NN/Optimizer.hpp"
 #include "NN/WeightInitializers.hpp"
 #include "NN/Trainer.hpp"
+#include "NN/DPTrainer.hpp"
 #include "Tensor/TensorBase.hpp"
 #include <iostream>
 #include <vector>
@@ -31,9 +32,9 @@ enum class LogicalOperator
 constexpr double LEARNING_RATE = 0.001;
 constexpr int HIDDEN_LAYERS = 2;
 constexpr int HIDDEN_SIZE = 16;
-constexpr int EPOCHS = 100;
-constexpr int BATCH_SIZE = 2;
-constexpr int N = 100;
+constexpr int EPOCHS = 1000;
+constexpr int BATCH_SIZE = 100;
+constexpr int N = 1000;
 constexpr LogicalOperator LOGICAL_OPERATOR = LogicalOperator::OR;
 
 
@@ -118,7 +119,7 @@ int main()
     std::shared_ptr<PPNN::Loss<2, double>> loss = std::make_shared<PPNN::MSE<2, double>>();
 
     // // Create trainer
-    std::shared_ptr<PPNN::Trainer<2, double>> trainer = std::make_shared<PPNN::Trainer<2, double>>(model, optimizer, loss);
+    std::shared_ptr<PPNN::DPTrainer<2, double>> trainer = std::make_shared<PPNN::DPTrainer<2, double>>(model, optimizer, loss);
 
     // // Create training data
     std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputs;
@@ -156,7 +157,11 @@ int main()
     }
 
     // Train model
+    #ifdef DEBUG
     trainer->train(inputs, targets, EPOCHS, BATCH_SIZE, true);
+    #else
+    trainer->train(inputs, targets, EPOCHS, BATCH_SIZE);
+    #endif
 
     // Test model
     std::cout << "Testing the model..." << std::endl;

@@ -10,6 +10,7 @@
 #include "NN/Optimizer.hpp"
 #include "NN/WeightInitializers.hpp"
 #include "NN/Trainer.hpp"
+#include "NN/DPTrainer.hpp"
 #include "Tensor/TensorBase.hpp"
 #include <iostream>
 #include <vector>
@@ -70,7 +71,7 @@ int main()
     std::shared_ptr<PPNN::Loss<2, double>> loss = std::make_shared<PPNN::MSE<2, double>>();
 
     // // Create trainer
-    std::shared_ptr<PPNN::Trainer<2, double>> trainer = std::make_shared<PPNN::Trainer<2, double>>(model, optimizer, loss);
+    std::shared_ptr<PPNN::DPTrainer<2, double>> trainer = std::make_shared<PPNN::DPTrainer<2, double>>(model, optimizer, loss);
 
     // // Create random number generator
     std::random_device rd;

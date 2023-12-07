@@ -210,14 +210,20 @@ namespace PPGrad
     template <int Dim, typename DT>
     void Tensor<Dim, DT>::zeroGrad()
     {
-        this->gradient->setZero();
+        #pragma omp critical
+        {
+            this->gradient->setZero();
+        }
     }
 
     /// @brief Accumulate the gradient of this tensor (intended to be called during backpropagation from nodes "upstream")
     template <int Dim, typename DT>
     void Tensor<Dim, DT>::addGrad(std::shared_ptr<Eigen::Tensor<DT, Dim>> grad)
     {
-        *this->gradient += *grad;
+        #pragma omp critical
+        {
+            *this->gradient += *grad;
+        }
     }
 
     // Explicit template instantiations

@@ -3,16 +3,25 @@ DEBUG := 1
 # Compiler
 CXX := g++
 
+# Number of processes for MPI
+NP := 2
+
+# Run command (empty if not MPI)
+RUN := ''
+ifeq ($(CXX), mpic++)
+	RUN := mpirun -np $(NP)
+endif
+
 # Compiler flags
 CXXFLAGS := -std=c++17 -Wall -Wextra
-LDLIBS := -pthread
+LDLIBS := -pthread -fopenmp
 LDTESTS := -lgtest -lgtest_main -pthread
 
 # Debug mode
 ifeq ($(DEBUG), 1)
 	CXXFLAGS += -g -Og -DDEBUG
 else
-	CXXFLAGS += -O2
+	CXXFLAGS += -O3 -DNDEBUG
 endif
 
 # Directories
@@ -72,7 +81,7 @@ doxygen:
 example_%: $(OBJ_FILES) $(BUILD_DIR)/%.o
 	@echo "Running example $@"
 	$(CXX) $(CXXFLAGS) $(LDLIBS) $^ -o $(BUILD_DIR)/$@
-	./$(BUILD_DIR)/$@
+	$(RUN) ./$(BUILD_DIR)/$@
 
 # Clean up
 clean:
