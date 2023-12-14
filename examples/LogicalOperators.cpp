@@ -126,6 +126,7 @@ int main()
     // // "Obtain" training data
     std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputs;
     std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> targets;
+    std::chrono::steady_clock::time_point begin;
 #ifdef USE_MPI
     // // Initialize MPI
     MPI_Init(NULL, NULL);
@@ -168,8 +169,8 @@ int main()
             targets.push_back(target);
         }
 
-    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-    // keep the 
+    begin = std::chrono::steady_clock::now();
+    
 #ifdef USE_MPI
     }
 
