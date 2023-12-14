@@ -26,5 +26,7 @@ jobs:
         sudo mkdir /usr/local/lib/googletest
         sudo ln -s /usr/lib/libgtest.a /usr/local/lib/googletest/libgtest.a
         sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/googletest/libgtest_main.a      
+    - name: Install dependencies
+      run: sudo apt-get install -y libeigen3-dev
     - name: make tests
       run: make tests
