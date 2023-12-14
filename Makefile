@@ -6,12 +6,6 @@ CXX := g++
 # Number of processes for MPI
 NP := 2
 
-# Run command (empty if not MPI)
-RUN := ''
-ifeq ($(CXX), mpic++)
-	RUN := mpirun -np $(NP)
-endif
-
 # Compiler flags
 CXXFLAGS := -std=c++17 -Wall -Wextra
 LDLIBS := -pthread -fopenmp
@@ -19,9 +13,16 @@ LDTESTS := -lgtest -lgtest_main -pthread
 
 # Debug mode
 ifeq ($(DEBUG), 1)
-	CXXFLAGS += -g -Og -DDEBUG
+	CXXFLAGS += -g -Og -DDEBUG -DPPGRAD_DEBUG
 else
 	CXXFLAGS += -O3 -DNDEBUG
+endif
+
+# Run command (empty if not MPI)
+RUN := 
+ifeq ($(CXX), mpic++)
+	RUN := mpirun -np $(NP)
+	CXXFLAGS += -DUSE_MPI
 endif
 
 # Directories
