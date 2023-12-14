@@ -46,12 +46,13 @@ namespace PPNN
         /// @brief Forward function of the model, intended to produce prediction for batched input.
         /// @param inputs Batch (vector) of input tensors intended for model prediction.
         /// @return Batch (vector) of output tensors produced by the model.
-        std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> forward(std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> inputs) override {
+        std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> forward(std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> inputs) override
+        {
             std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> outputs;
             outputs.reserve(inputs.size());
 
             for (std::shared_ptr<PPGrad::TensorBase<Dim, DT>> input : inputs)
-            {    
+            {
                 std::shared_ptr<PPGrad::TensorBase<Dim, DT>> output = (W * input) + b; // PPGrad magic!
                 outputs.push_back(output);
             }
@@ -61,20 +62,21 @@ namespace PPNN
         /// @brief Forward function of the model, intended to produce prediction for single input.
         /// @param inputs Batch (vector) of input tensors intended for model prediction.
         /// @return Batch (vector) of output tensors produced by the model.
-        std::shared_ptr<PPGrad::TensorBase<Dim, DT>> forward(std::shared_ptr<PPGrad::TensorBase<Dim, DT>> input) override {
+        std::shared_ptr<PPGrad::TensorBase<Dim, DT>> forward(std::shared_ptr<PPGrad::TensorBase<Dim, DT>> input) override
+        {
             return (W * input) + b; // PPGrad magic!
         }
 
         /// @brief Return list of [trainable] parameters of the model (they shall contain the gradients after running backward() on each output produced by `forward()`).
         /// @return List of [trainable] parameters of the model.
-        std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>>& getParams() override
+        std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> &getParams() override
         {
             return this->params;
         }
 
         /// @brief Set list of [trainable] parameters of the model (intended to contain updated parameters after running optimizer).
         /// @param params List of (updated) [trainable] parameters of the model (in order: W, b).
-        void setParams(std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>>& params) override
+        void setParams(std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> &params) override
         {
             W = params[0];
             b = params[1];

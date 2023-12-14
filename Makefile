@@ -87,3 +87,4 @@ example_%: $(OBJ_FILES) $(BUILD_DIR)/%.o
 # Clean up
 clean:
 	rm -rf $(BUILD_DIR)/*
+	rm -rf docs/*

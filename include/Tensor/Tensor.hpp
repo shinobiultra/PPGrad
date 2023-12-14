@@ -68,16 +68,15 @@ namespace PPGrad
         void addGrad(std::shared_ptr<Eigen::Tensor<DT, Dim>> grad) override;
 
         /// @brief Raw Tensors are leaf nodes of the computational graph, thus have no parents.
-        virtual std::vector <std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> getParents() override
+        virtual std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> getParents() override
         {
             return std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>>();
         }
 
-
         // ------- Static methods ------- //
 
         // ------------ Tensor generation ------------ //
-    
+
         /// @brief Generate instance of `Tensor` zero initialized. Note that the Tensors do not require gradient by default!
         /// @tparam DT Datatype of the underlying Eigen Tensor
         /// @tparam Dim Number of dimensions of the Tensor
@@ -141,7 +140,5 @@ namespace PPGrad
         /// @param requiresGrad Whether or not to accumulate gradients for this tensor.
         /// @return Shared pointer to the random Tensor
         static std::shared_ptr<TensorBase<Dim, DT>> eye(std::array<int, Dim> shape, bool requiresGrad);
-
-
     };
 }

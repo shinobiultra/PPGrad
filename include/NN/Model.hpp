@@ -29,11 +29,11 @@ namespace PPNN
 
         /// @brief Return list of [trainable] parameters of the model (they shall contain the gradients after running backward() on each output produced by `forward()`).
         /// @return List of [trainable] parameters of the model.
-        virtual std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>>& getParams() = 0;
+        virtual std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> &getParams() = 0;
 
         /// @brief Set list of [trainable] parameters of the model (intended to contain updated parameters after running optimizer).
         /// @param params List of (updated) [trainable] parameters of the model.
-        virtual void setParams(std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>>& params) = 0;
+        virtual void setParams(std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> &params) = 0;
     };
 
 }

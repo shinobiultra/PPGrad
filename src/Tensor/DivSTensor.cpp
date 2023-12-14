@@ -1,7 +1,6 @@
 
 /** @file */
 
-
 #include "Tensor/DivSTensor.hpp"
 
 #include <unsupported/Eigen/CXX11/Tensor>
@@ -24,8 +23,9 @@ namespace PPGrad
     }
 
     template <int Dim, typename DT>
-    std::vector <std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> DivSTensor<Dim, DT>::getParents() {
-        std::vector <std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> parents;
+    std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> DivSTensor<Dim, DT>::getParents()
+    {
+        std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> parents;
         parents.push_back(this->inputA);
         return parents;
     }

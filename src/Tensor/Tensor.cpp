@@ -16,17 +16,18 @@
 namespace PPGrad
 {
 
-
     /// @brief Generate instance of `Tensor` zero initialized
     /// @tparam DT Datatype of the underlying Eigen Tensor
     /// @tparam Dim Number of dimensions of the Tensor
     /// @param shape Shape of the Tensor
     /// @return Shared pointer to the zero-initialized Tensor
     template <int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::zeros(std::array<int, Dim> shape) {
+    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::zeros(std::array<int, Dim> shape)
+    {
         // convert shape to Dimensions object
         Eigen::array<Eigen::Index, Dim> dimensions;
-        for (int i = 0; i < Dim; i++) {
+        for (int i = 0; i < Dim; i++)
+        {
             dimensions[i] = shape[i];
         }
 
@@ -42,10 +43,12 @@ namespace PPGrad
     /// @param requiresGrad Whether or not to accumulate gradients for this tensor.
     /// @return Shared pointer to the zero-initialized Tensor
     template <int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::zeros(std::array<int, Dim> shape, bool requiresGrad) {
+    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::zeros(std::array<int, Dim> shape, bool requiresGrad)
+    {
         // convert shape to Dimensions object
         Eigen::array<Eigen::Index, Dim> dimensions;
-        for (int i = 0; i < Dim; i++) {
+        for (int i = 0; i < Dim; i++)
+        {
             dimensions[i] = shape[i];
         }
 
@@ -60,10 +63,12 @@ namespace PPGrad
     /// @param shape Shape of the Tensor
     /// @return Shared pointer to the random Tensor
     template <int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::randn(std::array<int, Dim> shape) {
+    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::randn(std::array<int, Dim> shape)
+    {
         // convert shape to Dimensions object
         Eigen::array<Eigen::Index, Dim> dimensions;
-        for (int i = 0; i < Dim; i++) {
+        for (int i = 0; i < Dim; i++)
+        {
             dimensions[i] = shape[i];
         }
 
@@ -79,10 +84,12 @@ namespace PPGrad
     /// @param requiresGrad Whether or not to accumulate gradients for this tensor.
     /// @return Shared pointer to the random Tensor
     template <int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::randn(std::array<int, Dim> shape, bool requiresGrad) {
+    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::randn(std::array<int, Dim> shape, bool requiresGrad)
+    {
         // convert shape to Dimensions object
         Eigen::array<Eigen::Index, Dim> dimensions;
-        for (int i = 0; i < Dim; i++) {
+        for (int i = 0; i < Dim; i++)
+        {
             dimensions[i] = shape[i];
         }
 
@@ -99,10 +106,12 @@ namespace PPGrad
     /// @param stddev Standard deviation of the Normal distribution
     /// @return Shared pointer to the random Tensor
     template <int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::randn(std::array<int, Dim> shape, DT mean, DT stddev) {
+    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::randn(std::array<int, Dim> shape, DT mean, DT stddev)
+    {
         // convert shape to Dimensions object
         Eigen::array<Eigen::Index, Dim> dimensions;
-        for (int i = 0; i < Dim; i++) {
+        for (int i = 0; i < Dim; i++)
+        {
             dimensions[i] = shape[i];
         }
 
@@ -121,10 +130,12 @@ namespace PPGrad
     /// @param requiresGrad Whether or not to accumulate gradients for this tensor.
     /// @return Shared pointer to the random Tensor
     template <int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::randn(std::array<int, Dim> shape, DT mean, DT stddev, bool requiresGrad) {
+    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::randn(std::array<int, Dim> shape, DT mean, DT stddev, bool requiresGrad)
+    {
         // convert shape to Dimensions object
         Eigen::array<Eigen::Index, Dim> dimensions;
-        for (int i = 0; i < Dim; i++) {
+        for (int i = 0; i < Dim; i++)
+        {
             dimensions[i] = shape[i];
         }
 
@@ -140,19 +151,23 @@ namespace PPGrad
     /// @param shape Shape of the Tensor
     /// @return Shared pointer to the random Tensor
     template <int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::eye(std::array<int, Dim> shape) {
+    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::eye(std::array<int, Dim> shape)
+    {
         // convert shape to Dimensions object
         Eigen::array<Eigen::Index, Dim> dimensions;
-        for (int i = 0; i < Dim; i++) {
+        for (int i = 0; i < Dim; i++)
+        {
             dimensions[i] = shape[i];
         }
 
         Eigen::Tensor<DT, Dim> data = Eigen::Tensor<DT, Dim>(dimensions);
         data.setZero();
         Eigen::array<int, Dim> indices;
-        
-        for (int i = 0; i < Dim; i++) {
-            for (int j = 0; j < Dim; j++) {
+
+        for (int i = 0; i < Dim; i++)
+        {
+            for (int j = 0; j < Dim; j++)
+            {
                 indices[j] = i;
             }
             data(indices) = 1;
@@ -168,19 +183,23 @@ namespace PPGrad
     /// @param requiresGrad Whether or not to accumulate gradients for this tensor.
     /// @return Shared pointer to the random Tensor
     template <int Dim, typename DT>
-    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::eye(std::array<int, Dim> shape, bool requiresGrad) {
+    std::shared_ptr<TensorBase<Dim, DT>> Tensor<Dim, DT>::eye(std::array<int, Dim> shape, bool requiresGrad)
+    {
         // convert shape to Dimensions object
         Eigen::array<Eigen::Index, Dim> dimensions;
-        for (int i = 0; i < Dim; i++) {
+        for (int i = 0; i < Dim; i++)
+        {
             dimensions[i] = shape[i];
         }
 
         Eigen::Tensor<DT, Dim> data = Eigen::Tensor<DT, Dim>(dimensions);
         data.setZero();
         Eigen::array<int, Dim> indices;
-        
-        for (int i = 0; i < Dim; i++) {
-            for (int j = 0; j < Dim; j++) {
+
+        for (int i = 0; i < Dim; i++)
+        {
+            for (int j = 0; j < Dim; j++)
+            {
                 indices[j] = i;
             }
             data(indices) = 1;
@@ -188,7 +207,6 @@ namespace PPGrad
 
         return std::make_shared<Tensor<Dim, DT>>(std::make_shared<Eigen::Tensor<DT, Dim>>(data), requiresGrad);
     }
-
 
     /// @brief Backward will simply do nothing for raw Tensors as they are leaf nodes in backpropagation.
     template <int Dim, typename DT>
@@ -210,7 +228,7 @@ namespace PPGrad
     template <int Dim, typename DT>
     void Tensor<Dim, DT>::zeroGrad()
     {
-        #pragma omp critical
+#pragma omp critical
         {
             this->gradient->setZero();
         }
@@ -220,7 +238,7 @@ namespace PPGrad
     template <int Dim, typename DT>
     void Tensor<Dim, DT>::addGrad(std::shared_ptr<Eigen::Tensor<DT, Dim>> grad)
     {
-        #pragma omp critical
+#pragma omp critical
         {
             *this->gradient += *grad;
         }

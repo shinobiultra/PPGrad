@@ -47,7 +47,7 @@ namespace PPNN
     public:
         DT operator()(std::shared_ptr<PPGrad::TensorBase<Dim, DT>> prediction, std::shared_ptr<PPGrad::TensorBase<Dim, DT>> label, bool training = false) override
         {
-            Eigen::Tensor<double, 0> lossT = (*prediction->getData() - *label->getData()).square().sum() / (double) prediction->getData()->size();
+            Eigen::Tensor<double, 0> lossT = (*prediction->getData() - *label->getData()).square().sum() / (double)prediction->getData()->size();
             DT loss = lossT();
             if (training)
             {

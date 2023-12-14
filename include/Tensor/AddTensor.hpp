@@ -1,7 +1,6 @@
 
 /** @file */
 
-
 #pragma once
 #include <Eigen/Dense>
 #include <unsupported/Eigen/CXX11/Tensor>
@@ -49,6 +48,6 @@ namespace PPGrad
         /// @brief Calculate the gradient of this tensor with respect to it's inputs.
         void _backward() override;
 
-        std::vector <std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> getParents() override;
+        std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> getParents() override;
     };
 }

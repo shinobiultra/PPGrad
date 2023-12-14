@@ -37,7 +37,7 @@ namespace PPNN
             std::shared_ptr<Model<Dim, DT>> model,
             std::shared_ptr<Optimizer<Dim, DT>> optimizer,
             std::shared_ptr<Loss<Dim, DT>> loss,
-            int32_t gradSyncFreq = 16,  // very conservative default value (see DiLoCo paper)
+            int32_t gradSyncFreq = 16, // very conservative default value (see DiLoCo paper)
             bool gradientAccumulation = false)
         {
             this->model = model;
@@ -78,7 +78,7 @@ namespace PPNN
 
                     std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> batchPredictions(batchSize);
 
-                    #pragma omp parallel for default(shared)
+#pragma omp parallel for default(shared)
                     for (size_t batchIdx = batchStart; batchIdx < batchStart + batchSize; batchIdx++)
                     {
                         batchPredictions[batchIdx - batchStart] = model->forward(inputs[batchIdx]);
@@ -93,8 +93,8 @@ namespace PPNN
                     DT batchLoss = loss->operator()(batchPredictions, batchTargets, true);
                     epochLosses.push_back(batchLoss);
 
-                    // Call backward on each output produced by forward() to accumulate gradients in the parameters.
-                    #pragma omp parallel for default(shared)
+// Call backward on each output produced by forward() to accumulate gradients in the parameters.
+#pragma omp parallel for default(shared)
                     for (std::shared_ptr<PPGrad::TensorBase<Dim, DT>> &prediction : batchPredictions)
                     {
                         PPGrad::TensorBase<Dim, DT>::backward(prediction);
@@ -119,13 +119,15 @@ namespace PPNN
                         }
                         gradSyncCounter = 0;
 
-                        if (this->gradientAccumulation){
+                        if (this->gradientAccumulation)
+                        {
                             // Update the parameters
                             optimizer->update(params);
                         }
                     }
 
-                    if (!this->gradientAccumulation){
+                    if (!this->gradientAccumulation)
+                    {
                         // Update the parameters
                         optimizer->update(params);
                     }

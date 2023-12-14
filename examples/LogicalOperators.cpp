@@ -225,7 +225,7 @@ int main()
             std::cout << "[Rank: " << worldRank << "] param " << i << ": " << (param->getData()->data())[i] << std::endl;
         }
     }
-#endif   
+#endif
 #endif
 
 // Train model

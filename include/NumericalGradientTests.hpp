@@ -1,7 +1,6 @@
 
 /** @file */
 
-
 #pragma once
 #include "Tensor/TensorBase.hpp"
 #include <unsupported/Eigen/CXX11/Tensor>
@@ -37,7 +36,6 @@ double LSumMixed(std::vector<Eigen::Tensor<double, 2>> inputTensors);
 /// @param autoBackward Whether or not to call _backward() on each tensor automatically.
 /// @return Vector of intermediate tensors.
 std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumMixed(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors, bool autoBackward = false);
-
 
 /// @brief Multiply Tensors (T[i] * T[i+1]) with some scalar addition sparkled in and sum the result.
 /// @param inputTensors Tensors to multiply.

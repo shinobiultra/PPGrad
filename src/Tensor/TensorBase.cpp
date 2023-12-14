@@ -110,8 +110,6 @@ namespace PPGrad
         return std::make_shared<MultSTensor<Dim, DT>>(a, other, requiresGrad);
     }
 
-
-
     // Explicit template operator instantiations
     template std::shared_ptr<TensorBase<2, double>> operator+(std::shared_ptr<TensorBase<2, double>> a, std::shared_ptr<TensorBase<2, double>> b);
     template std::shared_ptr<TensorBase<2, double>> operator-(std::shared_ptr<TensorBase<2, double>> a, std::shared_ptr<TensorBase<2, double>> b);

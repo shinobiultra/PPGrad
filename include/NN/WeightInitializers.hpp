@@ -106,7 +106,7 @@ namespace PPNN
             XavierUniform<DT> xavierUniform(tensor->getData()->dimensions()[1], tensor->getData()->dimensions()[0]);
             // tensor->getData()->unaryExpr([&](DT /*x*/)
             //                              { return xavierUniform(); }); // `unaryExpr` seems to not be implemented or something
-            
+
             // Manual (recursive due to Dim) initialization
             std::array<int, Dim> indices;
             std::function<void(int)> init = [&](int dim)
@@ -132,7 +132,7 @@ namespace PPNN
             He<DT> he(tensor->getData()->dimensions()[1]);
             // tensor->getData()->unaryExpr([&](DT /*x*/)
             //                              { return he(); }); // `unaryExpr` seems to not be implemented or something
-            
+
             // Manual (recursive due to Dim) initialization
             std::array<int, Dim> indices;
             std::function<void(int)> init = [&](int dim)

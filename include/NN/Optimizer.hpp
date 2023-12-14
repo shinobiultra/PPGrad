@@ -43,7 +43,7 @@ namespace PPNN
 
         void update(std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> params) override
         {
-            for (auto& param : params)
+            for (auto &param : params)
             {
                 *param->getData() = *param->getData() - (learningRate * *param->getGrad());
                 param->zeroGrad();
@@ -84,7 +84,7 @@ namespace PPNN
             if (m.size() == 0)
             {
                 numParams = params.size();
-                for (std::shared_ptr<Eigen::Tensor<DT, Dim>>& param : params)
+                for (std::shared_ptr<Eigen::Tensor<DT, Dim>> &param : params)
                 {
                     std::shared_ptr<Eigen::Tensor<DT, Dim>> m0 = std::make_shared<Eigen::Tensor<DT, Dim>>(param->getData()->dimensions());
                     m0->setZero();

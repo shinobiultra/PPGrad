@@ -1,8 +1,7 @@
-/** @file 
+/** @file
  * @brief Simplest (arguably) example of a Neural Network model built with PPGrad & PPNN framework. The goal is to teach the model to invert a sign of a single number.
  * @details The neural network used is simple Dense layer with 1 input and 1 output, and MSE loss function. The model is trained on 1000 examples of random numbers in range [-R, R] and their inverted values.
-*/
-
+ */
 
 #include "NN/Model.hpp"
 #include "NN/Dense.hpp"
@@ -18,19 +17,16 @@
 #include <random>
 #include <cmath>
 
-
 constexpr double LEARNING_RATE = 0.0001;
 constexpr double R = 10.0;
-
 
 class InvertorNN : public PPNN::Model<2, double>
 {
 private:
     std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> params;
     std::shared_ptr<PPNN::Dense<2, double>> dense;
-    
-public:
 
+public:
     InvertorNN()
     {
         dense = std::make_shared<PPNN::Dense<2, double>>(1, 1);
@@ -47,17 +43,16 @@ public:
         return dense->forward(input);
     }
 
-    std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>>& getParams()
+    std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> &getParams()
     {
         return params;
     }
 
-    void setParams(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>>& params)
+    void setParams(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> &params)
     {
         dense->setParams(params);
     }
 };
-
 
 int main()
 {

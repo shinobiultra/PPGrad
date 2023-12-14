@@ -1,7 +1,6 @@
 
 /** @file */
 
-
 #pragma once
 #include <Eigen/Dense>
 #include <unsupported/Eigen/CXX11/Tensor>
@@ -58,7 +57,6 @@ namespace PPGrad
         /// @brief Get the parents of this tensor in the computation graph.
         virtual std::vector<std::shared_ptr<PPGrad::TensorBase<Dim, DT>>> getParents() = 0;
 
-
         // ------- Static methods ------- //
 
         /// @brief Topologically order all parents of this tensor and call _backward() on them.
@@ -113,7 +111,6 @@ namespace PPGrad
     template <int Dim, typename DT>
     std::shared_ptr<TensorBase<Dim, DT>> operator/(std::shared_ptr<TensorBase<Dim, DT>> a, DT other);
 
-
     /// @brief Operator overload for adding a scalar to a tensor with correct gradient accumulation.
     /// @param other The scalar to add.
     /// @return AddTensor<Dim, DT> The result of the addition with proper _backward() implementation.
@@ -132,5 +129,4 @@ namespace PPGrad
     template <int Dim, typename DT>
     std::shared_ptr<TensorBase<Dim, DT>> operator*(DT other, std::shared_ptr<TensorBase<Dim, DT>> a);
 
-    
 }

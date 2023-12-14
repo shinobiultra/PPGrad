@@ -568,38 +568,50 @@ TEST(MixedTensorTest, GradientPropagationAutomaticNonSquare)
 }
 
 // // -------- Basic Constructors Tests --------
-TEST(TensorTest, ZerosConstructor) {
+TEST(TensorTest, ZerosConstructor)
+{
     std::array<int, 2> shape = {2, 2};
     auto tensor = PPGrad::Tensor<2, double>::zeros(shape);
     auto data = tensor->getData();
-    for (int i = 0; i < shape[0]; i++) {
-        for (int j = 0; j < shape[1]; j++) {
+    for (int i = 0; i < shape[0]; i++)
+    {
+        for (int j = 0; j < shape[1]; j++)
+        {
             EXPECT_DOUBLE_EQ((*data)(i, j), 0.0);
         }
     }
 }
 
-TEST(TensorTest, RandnConstructor) {
+TEST(TensorTest, RandnConstructor)
+{
     std::array<int, 2> shape = {2, 2};
     auto tensor = PPGrad::Tensor<2, double>::randn(shape);
     auto data = tensor->getData();
 
-    for (int i = 0; i < shape[0]; i++) {
-        for (int j = 0; j < shape[1]; j++) {
+    for (int i = 0; i < shape[0]; i++)
+    {
+        for (int j = 0; j < shape[1]; j++)
+        {
             EXPECT_NE((*data)(i, j), 0.0);
         }
     }
 }
 
-TEST(TensorTest, EyeConstructor) {
+TEST(TensorTest, EyeConstructor)
+{
     std::array<int, 2> shape = {2, 2};
     auto tensor = PPGrad::Tensor<2, double>::eye(shape);
     auto data = tensor->getData();
-    for (int i = 0; i < shape[0]; i++) {
-        for (int j = 0; j < shape[1]; j++) {
-            if (i == j) {
+    for (int i = 0; i < shape[0]; i++)
+    {
+        for (int j = 0; j < shape[1]; j++)
+        {
+            if (i == j)
+            {
                 EXPECT_DOUBLE_EQ((*data)(i, j), 1.0);
-            } else {
+            }
+            else
+            {
                 EXPECT_DOUBLE_EQ((*data)(i, j), 0.0);
             }
         }

@@ -59,7 +59,7 @@ namespace PPNN
                     epochLosses.push_back(batchLoss);
 
                     // Call backward on each output produced by forward() to accumulate gradients in the parameters.
-                    for (std::shared_ptr<PPGrad::TensorBase<Dim, DT>>& prediction : batchPredictions)
+                    for (std::shared_ptr<PPGrad::TensorBase<Dim, DT>> &prediction : batchPredictions)
                     {
                         PPGrad::TensorBase<Dim, DT>::backward(prediction);
                     }
