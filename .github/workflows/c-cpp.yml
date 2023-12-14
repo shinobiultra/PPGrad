@@ -19,7 +19,7 @@ jobs:
         mkdir -p $HOME/build
         cd $HOME/build
         sudo cmake /usr/src/googletest/googletest
-        sudo make
+        sudo make -j$(nproc)
         sudo cp lib/libgtest* /usr/lib/
         cd ..
         sudo rm -rf build
@@ -30,3 +30,13 @@ jobs:
       run: sudo apt-get install -y libeigen3-dev
     - name: make tests
       run: make tests -j$(nproc)
+    - name: Make documentation
+      uses: mattnotmitt/doxygen-action@1.9.5
+    - name: Doxygen GitHub Pages Deploy Action
+      uses: DenverCoder1/doxygen-github-pages-action@v1.3.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: gh-pages
+        folder: docs/html
+    
+  
