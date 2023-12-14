@@ -113,9 +113,9 @@ Inheritance diagram for PPNN::Dense&lt; Dim, DT &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aedfdc1ef5307d947712b7aa43676c964"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPPNN_1_1Dense.html#aedfdc1ef5307d947712b7aa43676c964">Dense</a> (int inDim, int outDim, <a class="el" href="WeightInitializers_8hpp.html#ad66a05cf3e8874f88967c628fa6bd341">WeightInititializers</a> initializer=WeightInititializers::XAVIER)</td></tr>
-<tr class="memdesc:aedfdc1ef5307d947712b7aa43676c964"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="classPPNN_1_1Dense.html" title="Dense layer (fully connected layer).">Dense</a> layer.  <a href="classPPNN_1_1Dense.html#aedfdc1ef5307d947712b7aa43676c964">More...</a><br /></td></tr>
-<tr class="separator:aedfdc1ef5307d947712b7aa43676c964"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68b8e4c70f56ba2ad1bbcac5d4d1cda6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPPNN_1_1Dense.html#a68b8e4c70f56ba2ad1bbcac5d4d1cda6">Dense</a> (int inDim, int outDim, <a class="el" href="WeightInitializers_8hpp.html#ad66a05cf3e8874f88967c628fa6bd341">WeightInititializers</a> initializer=WeightInititializers::XAVIER, PPNN::Activations activation=PPNN::Activations::Linear)</td></tr>
+<tr class="memdesc:a68b8e4c70f56ba2ad1bbcac5d4d1cda6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for <a class="el" href="classPPNN_1_1Dense.html" title="Dense layer (fully connected layer).">Dense</a> layer.  <a href="classPPNN_1_1Dense.html#a68b8e4c70f56ba2ad1bbcac5d4d1cda6">More...</a><br /></td></tr>
+<tr class="separator:a68b8e4c70f56ba2ad1bbcac5d4d1cda6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90c527f163fbe89ab3bfc91f0a1aab42"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::shared_ptr&lt; <a class="el" href="classPPGrad_1_1TensorBase.html">PPGrad::TensorBase</a>&lt; Dim, DT &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classPPNN_1_1Dense.html#a90c527f163fbe89ab3bfc91f0a1aab42">forward</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="classPPGrad_1_1TensorBase.html">PPGrad::TensorBase</a>&lt; Dim, DT &gt; &gt; &gt; inputs) override</td></tr>
 <tr class="memdesc:a90c527f163fbe89ab3bfc91f0a1aab42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward function of the model, intended to produce prediction for batched input.  <a href="classPPNN_1_1Dense.html#a90c527f163fbe89ab3bfc91f0a1aab42">More...</a><br /></td></tr>
 <tr class="separator:a90c527f163fbe89ab3bfc91f0a1aab42"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -149,14 +149,17 @@ std::shared_ptr&lt; <a class="el" href="classPPGrad_1_1TensorBase.html">PPGrad::
 <tr class="memitem:afa4b8267f0ea4e23105ccde5da8dea3b"><td class="memItemLeft" align="right" valign="top"><a id="afa4b8267f0ea4e23105ccde5da8dea3b" name="afa4b8267f0ea4e23105ccde5da8dea3b"></a>
 std::shared_ptr&lt; <a class="el" href="classPPGrad_1_1TensorBase.html">PPGrad::TensorBase</a>&lt; Dim, DT &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>b</b></td></tr>
 <tr class="separator:afa4b8267f0ea4e23105ccde5da8dea3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7a8fc7555d624641e9626826a069240"><td class="memItemLeft" align="right" valign="top"><a id="ad7a8fc7555d624641e9626826a069240" name="ad7a8fc7555d624641e9626826a069240"></a>
+std::shared_ptr&lt; <a class="el" href="classPPNN_1_1Activation.html">PPNN::Activation</a>&lt; Dim, DT &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>activation</b></td></tr>
+<tr class="separator:ad7a8fc7555d624641e9626826a069240"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;int Dim, typename DT&gt;<br />
 class PPNN::Dense&lt; Dim, DT &gt;</div><p ><a class="el" href="classPPNN_1_1Dense.html" title="Dense layer (fully connected layer).">Dense</a> layer (fully connected layer). </p>
 <p >Subclass of <a class="el" href="classPPNN_1_1Model.html" title="Base class for all models in PPNN library.">Model</a> class, intended to be used as a fully connected layer in a neural network, i.e., have a set of parameters W and b, and perform the following operation: <code>y = Wx + b</code>. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aedfdc1ef5307d947712b7aa43676c964" name="aedfdc1ef5307d947712b7aa43676c964"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aedfdc1ef5307d947712b7aa43676c964">&#9670;&#160;</a></span>Dense()</h2>
+<a id="a68b8e4c70f56ba2ad1bbcac5d4d1cda6" name="a68b8e4c70f56ba2ad1bbcac5d4d1cda6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68b8e4c70f56ba2ad1bbcac5d4d1cda6">&#9670;&#160;</a></span>Dense()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -182,7 +185,13 @@ template&lt;int Dim, typename DT &gt; </div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="WeightInitializers_8hpp.html#ad66a05cf3e8874f88967c628fa6bd341">WeightInititializers</a>&#160;</td>
-          <td class="paramname"><em>initializer</em> = <code>WeightInititializers::XAVIER</code>&#160;</td>
+          <td class="paramname"><em>initializer</em> = <code>WeightInititializers::XAVIER</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">PPNN::Activations&#160;</td>
+          <td class="paramname"><em>activation</em> = <code>PPNN::Activations::Linear</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

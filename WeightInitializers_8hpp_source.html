@@ -196,8 +196,8 @@ $(document).ready(function(){initNavTree('WeightInitializers_8hpp_source.html','
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        {</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            <a class="code hl_class" href="classPPNN_1_1XavierUniform.html">XavierUniform&lt;DT&gt;</a> xavierUniform(tensor-&gt;getData()-&gt;dimensions()[1], tensor-&gt;getData()-&gt;dimensions()[0]);</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            <span class="comment">// tensor-&gt;getData()-&gt;unaryExpr([&amp;](DT /*x*/)</span></div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <span class="comment">//                              { return xavierUniform(); }); // `unaryExpr` seems to not be implemented or something</span></div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <span class="comment">//                              { return xavierUniform(); }); </span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="comment">// Manual (recursive due to Dim) initialization</span></div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            std::array&lt;int, Dim&gt; indices;</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            std::function&lt;void(<span class="keywordtype">int</span>)&gt; init = [&amp;](<span class="keywordtype">int</span> dim)</div>
@@ -222,8 +222,8 @@ $(document).ready(function(){initNavTree('WeightInitializers_8hpp_source.html','
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        {</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>            <a class="code hl_class" href="classPPNN_1_1He.html">He&lt;DT&gt;</a> he(tensor-&gt;getData()-&gt;dimensions()[1]);</div>
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            <span class="comment">// tensor-&gt;getData()-&gt;unaryExpr([&amp;](DT /*x*/)</span></div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            <span class="comment">//                              { return he(); }); // `unaryExpr` seems to not be implemented or something</span></div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>            </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            <span class="comment">//                              { return he(); });</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>            <span class="comment">// Manual (recursive due to Dim) initialization</span></div>
 <div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            std::array&lt;int, Dim&gt; indices;</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            std::function&lt;void(<span class="keywordtype">int</span>)&gt; init = [&amp;](<span class="keywordtype">int</span> dim)</div>
@@ -247,7 +247,7 @@ $(document).ready(function(){initNavTree('WeightInitializers_8hpp_source.html','
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>}</div>
 <div class="ttc" id="aTensorBase_8hpp_html"><div class="ttname"><a href="TensorBase_8hpp.html">TensorBase.hpp</a></div></div>
 <div class="ttc" id="aWeightInitializers_8hpp_html_ad66a05cf3e8874f88967c628fa6bd341"><div class="ttname"><a href="WeightInitializers_8hpp.html#ad66a05cf3e8874f88967c628fa6bd341">PPNN::WeightInititializers</a></div><div class="ttdeci">WeightInititializers</div><div class="ttdoc">Currently supported weight initializers that can be used to initialize Tensors in Neural Network laye...</div><div class="ttdef"><b>Definition:</b> WeightInitializers.hpp:17</div></div>
-<div class="ttc" id="aclassPPGrad_1_1TensorBase_html"><div class="ttname"><a href="classPPGrad_1_1TensorBase.html">PPGrad::TensorBase</a></div><div class="ttdoc">Abstract Tensor class for all Eigen accelerated math on tensors.</div><div class="ttdef"><b>Definition:</b> TensorBase.hpp:20</div></div>
+<div class="ttc" id="aclassPPGrad_1_1TensorBase_html"><div class="ttname"><a href="classPPGrad_1_1TensorBase.html">PPGrad::TensorBase</a></div><div class="ttdoc">Abstract Tensor class for all Eigen accelerated math on tensors.</div><div class="ttdef"><b>Definition:</b> TensorBase.hpp:19</div></div>
 <div class="ttc" id="aclassPPNN_1_1He_html"><div class="ttname"><a href="classPPNN_1_1He.html">PPNN::He</a></div><div class="ttdef"><b>Definition:</b> WeightInitializers.hpp:45</div></div>
 <div class="ttc" id="aclassPPNN_1_1WeightInitializer_html"><div class="ttname"><a href="classPPNN_1_1WeightInitializer.html">PPNN::WeightInitializer</a></div><div class="ttdef"><b>Definition:</b> WeightInitializers.hpp:62</div></div>
 <div class="ttc" id="aclassPPNN_1_1XavierUniform_html"><div class="ttname"><a href="classPPNN_1_1XavierUniform.html">PPNN::XavierUniform</a></div><div class="ttdef"><b>Definition:</b> WeightInitializers.hpp:27</div></div>

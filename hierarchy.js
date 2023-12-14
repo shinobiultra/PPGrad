@@ -1,5 +1,9 @@
 var hierarchy =
 [
+    [ "PPNN::Activation< Dim, DT >", "classPPNN_1_1Activation.html", [
+      [ "PPNN::Linear< Dim, DT >", "classPPNN_1_1Linear.html", null ],
+      [ "PPNN::ReLU< Dim, DT >", "classPPNN_1_1ReLU.html", null ]
+    ] ],
     [ "PPNN::DPTrainer< Dim, DT >", "classPPNN_1_1DPTrainer.html", null ],
     [ "PPNN::He< DT >", "classPPNN_1_1He.html", null ],
     [ "PPNN::Loss< Dim, DT >", "classPPNN_1_1Loss.html", [
@@ -20,6 +24,7 @@ var hierarchy =
         [ "PPGrad::DivSTensor< Dim, DT >", "classPPGrad_1_1DivSTensor.html", null ],
         [ "PPGrad::MultSTensor< Dim, DT >", "classPPGrad_1_1MultSTensor.html", null ],
         [ "PPGrad::MultTensor< Dim, DT >", "classPPGrad_1_1MultTensor.html", null ],
+        [ "PPGrad::ReLUTensor< Dim, DT >", "classPPGrad_1_1ReLUTensor.html", null ],
         [ "PPGrad::SubSTensor< Dim, DT >", "classPPGrad_1_1SubSTensor.html", null ],
         [ "PPGrad::SubTensor< Dim, DT >", "classPPGrad_1_1SubTensor.html", null ]
       ] ]

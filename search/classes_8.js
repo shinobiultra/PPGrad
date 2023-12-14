@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['tensor_0',['Tensor',['../classPPGrad_1_1Tensor.html',1,'PPGrad']]],
-  ['tensorbase_1',['TensorBase',['../classPPGrad_1_1TensorBase.html',1,'PPGrad']]],
-  ['trainer_2',['Trainer',['../classPPNN_1_1Trainer.html',1,'PPNN']]]
+  ['sgd_0',['SGD',['../classPPNN_1_1SGD.html',1,'PPNN']]],
+  ['substensor_1',['SubSTensor',['../classPPGrad_1_1SubSTensor.html',1,'PPGrad']]],
+  ['subtensor_2',['SubTensor',['../classPPGrad_1_1SubTensor.html',1,'PPGrad']]]
 ];
