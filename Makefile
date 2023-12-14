@@ -57,7 +57,7 @@ all: tests
 # Compile source files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(LDLIBS) -I $(INCLUDE_DIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(LDLIBS) $(LDTESTS) -I $(INCLUDE_DIR) -c $< -o $@
 
 # Compile test files
 $(BUILD_DIR)/%.o: $(TESTS_DIR)/%.cpp
