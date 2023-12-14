@@ -1,5 +1,5 @@
 # PPGrad
-C++ &amp; OpenMPI &amp; OpenMP toy framework for Neural Nets (a la [Micrograd](https://github.com/karpathy/micrograd)) created in approx. 90 hours as a semestral project
+C++ &amp; OpenMPI &amp; OpenMP toy framework for Neural Nets (a la [Micrograd](https://github.com/karpathy/micrograd)) created in approx. 7 days of scattered work as a semestral project.
 
 # Initial Plan
 

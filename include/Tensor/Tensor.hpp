@@ -37,7 +37,7 @@ namespace PPGrad
         Tensor(bool requiresGrad)
         {
             this->data = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>());
-            this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>());
+            this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>();
             this->gradient->setZero();
             this->requiresGrad = requiresGrad;
         }
@@ -48,7 +48,7 @@ namespace PPGrad
         Tensor(std::shared_ptr<Eigen::Tensor<DT, Dim>> data, bool requiresGrad)
         {
             this->data = data;
-            this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(Eigen::Tensor<DT, Dim>(data->dimensions()));
+            this->gradient = std::make_shared<Eigen::Tensor<DT, Dim>>(data->dimensions());
             this->gradient->setZero();
             this->requiresGrad = requiresGrad;
         }

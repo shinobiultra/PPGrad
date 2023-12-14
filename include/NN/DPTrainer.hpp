@@ -37,7 +37,7 @@ namespace PPNN
             std::shared_ptr<Model<Dim, DT>> model,
             std::shared_ptr<Optimizer<Dim, DT>> optimizer,
             std::shared_ptr<Loss<Dim, DT>> loss,
-            int32_t gradSyncFreq = 16,
+            int32_t gradSyncFreq = 16,  // very conservative default value (see DiLoCo paper)
             bool gradientAccumulation = false)
         {
             this->model = model;
