@@ -17,6 +17,7 @@
 #include <memory>
 #include <random>
 #include <cmath>
+#include <chrono>
 
 #ifdef USE_MPI
 #include "NN/DPTrainer.hpp"
@@ -167,6 +168,8 @@ int main()
             targets.push_back(target);
         }
 
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+    // keep the 
 #ifdef USE_MPI
     }
 
@@ -241,6 +244,10 @@ int main()
     MPI_Finalize();
 #endif
 
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+
+    std::cout << "Training took " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << " ms." << std::endl;
+    
     // Test model
     std::cout << "Testing the model..." << std::endl;
     for (int i = 0; i < 10; i++)
