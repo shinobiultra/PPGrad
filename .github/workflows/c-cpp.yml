@@ -13,6 +13,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Install Google Test
+      run: |
+        git clone https://github.com/google/googletest.git
+        cd googletest
+        mkdir build
+        cd build
+        cmake ..
+        make
+        sudo make install    
+    - name: install dependencies
+      run: sudo apt update && sudo apt install -y libeigen3-dev googletest openmpi-bin
     - name: make
       run: make
     - name: make tests
