@@ -10,6 +10,7 @@
 #include "NN/Optimizer.hpp"
 #include "NN/WeightInitializers.hpp"
 #include "NN/Trainer.hpp"
+#include "NN/Activations.hpp"
 #include "Tensor/TensorBase.hpp"
 #include <iostream>
 #include <vector>
@@ -35,10 +36,10 @@ enum class LogicalOperator
 
 constexpr double LEARNING_RATE = 0.001;
 constexpr int HIDDEN_LAYERS = 2;
-constexpr int HIDDEN_SIZE = 16;
-constexpr int EPOCHS = 5000;
-constexpr int BATCH_SIZE = 100;
-constexpr int N = 1000;
+constexpr int HIDDEN_SIZE = 8;
+constexpr int EPOCHS = 500;
+constexpr int BATCH_SIZE = 40;
+constexpr int N = 800;
 constexpr LogicalOperator LOGICAL_OPERATOR = LogicalOperator::OR;
 
 class LogicalNN : public PPNN::Model<2, double>
@@ -52,19 +53,19 @@ public:
     {
         if (hiddenLayers == 0)
         {
-            layers.push_back(std::make_shared<PPNN::Dense<2, double>>(2, 1));
+            layers.push_back(std::make_shared<PPNN::Dense<2, double>>(2, 1, PPNN::WeightInititializers::XAVIER, PPNN::Activations::ReLU));
             params = layers[0]->getParams();
         }
         else
         {
-            layers.push_back(std::make_shared<PPNN::Dense<2, double>>(2, hiddenSize));
+            layers.push_back(std::make_shared<PPNN::Dense<2, double>>(2, hiddenSize, PPNN::WeightInititializers::XAVIER, PPNN::Activations::ReLU));
             params = layers[0]->getParams();
             for (int i = 0; i < hiddenLayers - 1; i++)
             {
-                layers.push_back(std::make_shared<PPNN::Dense<2, double>>(hiddenSize, hiddenSize));
+                layers.push_back(std::make_shared<PPNN::Dense<2, double>>(hiddenSize, hiddenSize, PPNN::WeightInititializers::XAVIER, PPNN::Activations::ReLU));
                 params.insert(params.end(), layers[i + 1]->getParams().begin(), layers[i + 1]->getParams().end());
             }
-            layers.push_back(std::make_shared<PPNN::Dense<2, double>>(hiddenSize, 1));
+            layers.push_back(std::make_shared<PPNN::Dense<2, double>>(hiddenSize, 1, PPNN::WeightInititializers::XAVIER, PPNN::Activations::ReLU));
             params.insert(params.end(), layers[hiddenLayers]->getParams().begin(), layers[hiddenLayers]->getParams().end());
         }
     }
@@ -120,13 +121,6 @@ int main()
 
     // // Create loss function
     std::shared_ptr<PPNN::Loss<2, double>> loss = std::make_shared<PPNN::MSE<2, double>>();
-
-#ifdef USE_MPI
-    // // Create trainer
-    std::shared_ptr<PPNN::DPTrainer<2, double>> trainer = std::make_shared<PPNN::DPTrainer<2, double>>(model, optimizer, loss, 16, true);
-#else
-    std::shared_ptr<PPNN::Trainer<2, double>> trainer = std::make_shared<PPNN::Trainer<2, double>>(model, optimizer, loss);
-#endif
 
     // // "Obtain" training data
     std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputs;
@@ -228,6 +222,13 @@ int main()
 #endif
 #endif
 
+#ifdef USE_MPI
+    // // Create trainer
+    std::shared_ptr<PPNN::DPTrainer<2, double>> trainer = std::make_shared<PPNN::DPTrainer<2, double>>(model, optimizer, loss, 16, true);
+#else
+    std::shared_ptr<PPNN::Trainer<2, double>> trainer = std::make_shared<PPNN::Trainer<2, double>>(model, optimizer, loss);
+#endif
+
 // Train model
 #ifdef PPGRAD_DEBUG
     trainer->train(inputs, targets, EPOCHS, BATCH_SIZE, true);
@@ -249,7 +250,7 @@ int main()
         double b = (double)(rand() % 2);
         input->getData()->setValues({{a}, {b}});
         std::shared_ptr<PPGrad::TensorBase<2, double>> prediction = model->forward(input);
-        std::cout << "Input: " << a << ", " << b << ", Prediction: " << (*prediction->getData())(0, 0) << std::endl;
+        std::cout << "Input: " << a << ", " << b << ", Prediction: " << (*prediction->getData()) << std::endl;
     }
 
     return 0;

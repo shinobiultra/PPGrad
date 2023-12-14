@@ -81,7 +81,7 @@ namespace PPNN
         /// @return Batch (vector) of output tensors produced by the model.
         std::shared_ptr<PPGrad::TensorBase<Dim, DT>> forward(std::shared_ptr<PPGrad::TensorBase<Dim, DT>> input) override
         {
-            return (W * input) + b; // PPGrad magic!
+            return this->activation->operator()((W * input) + b); // PPGrad magic!
         }
 
         /// @brief Return list of [trainable] parameters of the model (they shall contain the gradients after running backward() on each output produced by `forward()`).
