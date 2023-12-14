@@ -57,21 +57,21 @@ all: tests
 # Compile source files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(LDLIBS) -I $(INCLUDE_DIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -I $(INCLUDE_DIR) -c $< -o $@ $(LDLIBS) 
 
 # Compile test files
 $(BUILD_DIR)/%.o: $(TESTS_DIR)/%.cpp
 	mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(LDLIBS) -I $(INCLUDE_DIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -I $(INCLUDE_DIR) -c $< -o $@ $(LDLIBS) 
 
 # Compile example files
 $(BUILD_DIR)/%.o: $(EXAMPLES_DIR)/%.cpp
 	mkdir -p $(dir $@)
-	$(CXX) $(CXXFLAGS) $(LDLIBS) -I $(INCLUDE_DIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -I $(INCLUDE_DIR) -c $< -o $@ $(LDLIBS)
 
 # Link tests and run
 tests: $(OBJ_FILES) $(TEST_OBJ_FILES)
-	$(CXX) $(CXXFLAGS) $(LDLIBS) $(LDTESTS) $^ -o $(BUILD_DIR)/test_suite.out
+	$(CXX) $(CXXFLAGS) $^ -o $(BUILD_DIR)/test_suite.out $(LDLIBS) $(LDTESTS)
 	./$(BUILD_DIR)/test_suite.out
 
 # Run Doxygen
