@@ -6,7 +6,7 @@
 #pragma once
 #include "Tensor/TensorBase.hpp"
 #include "NN/Model.hpp"
-#include <eigen3/unsupported/Eigen/CXX11/Tensor>
+#include <unsupported/Eigen/CXX11/Tensor>
 #include <memory>
 #include <vector>
 #include <mpi.h>

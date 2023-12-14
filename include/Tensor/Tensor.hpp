@@ -2,8 +2,8 @@
 /** @file */
 
 #pragma once
-#include <eigen3/Eigen/Dense>
-#include <eigen3/unsupported/Eigen/CXX11/Tensor>
+#include <Eigen/Dense>
+#include <unsupported/Eigen/CXX11/Tensor>
 
 #include "Tensor/TensorBase.hpp"
 

@@ -11,7 +11,7 @@
 #include "Tensor/DivSTensor.hpp"
 
 #include <memory>
-#include <eigen3/unsupported/Eigen/CXX11/Tensor>
+#include <unsupported/Eigen/CXX11/Tensor>
 
 namespace PPGrad
 {

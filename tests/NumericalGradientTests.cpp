@@ -14,7 +14,7 @@
 #include "Tensor/Tensor.hpp"
 #include "Tensor/TensorBase.hpp"
 
-#include <eigen3/unsupported/Eigen/CXX11/Tensor>
+#include <unsupported/Eigen/CXX11/Tensor>
 #include <vector>
 #include <memory>
 #include <iostream>

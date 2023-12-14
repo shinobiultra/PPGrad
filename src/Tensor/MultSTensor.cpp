@@ -4,7 +4,7 @@
 
 #include "Tensor/MultSTensor.hpp"
 
-#include <eigen3/unsupported/Eigen/CXX11/Tensor>
+#include <unsupported/Eigen/CXX11/Tensor>
 
 namespace PPGrad
 {

@@ -7,7 +7,7 @@ CXX := g++
 NP := 2
 
 # Compiler flags
-CXXFLAGS := -std=c++17 -Wall -Wextra
+CXXFLAGS := -std=c++17 -Wall -Wextra -I/usr/include/eigen3
 LDLIBS := -pthread -fopenmp
 LDTESTS := -lgtest -lgtest_main -pthread
 
