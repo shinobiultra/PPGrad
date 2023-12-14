@@ -13,6 +13,8 @@
 
 #include "Tensor/Tensor.hpp"
 #include "Tensor/TensorBase.hpp"
+#include "Tensor/ReLUTensor.hpp"
+#include "NN/Activations.hpp"
 
 #include <unsupported/Eigen/CXX11/Tensor>
 #include <vector>
@@ -309,6 +311,68 @@ std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LMultSumShapes(std::
     {
         PPGrad::TensorBase<2, double>::backward(resultTensors[resultTensors.size() - 1]);
     }
+
+    return resultTensors;
+}
+
+
+// ----- LSumReLU -----
+
+double LSumReLU(std::vector<Eigen::Tensor<double, 2>> inputTensors)
+{
+    Eigen::Tensor<double, 2> T = inputTensors[0].constant(0.0);
+    const int numTensors = inputTensors.size();
+    for (int i = 0; i < numTensors; i++)
+    {
+        Eigen::Tensor<double, 2> relu = inputTensors[i];
+        if (i % 2 == 0)
+        {
+            Eigen::Tensor<double, 2> res = T + relu;
+            T = res;
+        }
+        else
+        {
+            Eigen::array<Eigen::IndexPair<int>, 1> contractionPair = {Eigen::IndexPair<int>(1, 0)};
+            Eigen::Tensor<double, 2> res = T.contract(relu, contractionPair);
+            T = res;
+        }
+    }
+    Eigen::Tensor<double, 0> tensorSum = T.sum();
+    return tensorSum();
+}
+
+std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumReLU(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors)
+{
+    std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> resultTensors;
+
+    Eigen::Tensor<double, 2> eT = inputTensors[0]->getData()->constant(0.0);
+    std::shared_ptr<PPGrad::TensorBase<2, double>> T = std::make_shared<PPGrad::Tensor<2, double>>(std::make_shared<Eigen::Tensor<double, 2>>(eT));
+    const int numTensors = inputTensors.size();
+    
+    for (int i = 0; i < numTensors; i++)
+    {
+        std::shared_ptr<PPGrad::TensorBase<2, double>> reluTensor = inputTensors[i];
+
+        if (i % 2 == 0)
+        {
+            std::shared_ptr<PPGrad::TensorBase<2, double>> Q = T + reluTensor;
+            resultTensors.push_back(Q);
+            T = Q;
+        }
+        else
+        {
+            std::shared_ptr<PPGrad::TensorBase<2, double>> Q = T * reluTensor;
+            resultTensors.push_back(Q);
+            T = Q;
+        }
+    }
+
+    // initialize gradient of the last tensor to 1
+    resultTensors[resultTensors.size() - 1]->getGrad()->setConstant(1.0);
+
+    
+    PPGrad::TensorBase<2, double>::backward(resultTensors[resultTensors.size() - 1]);
+    
 
     return resultTensors;
 }

@@ -7,6 +7,7 @@
 #include "Tensor/Tensor.hpp"
 #include "NN/Model.hpp"
 #include "NN/WeightInitializers.hpp"
+#include "NN/Activations.hpp"
 #include <vector>
 #include <memory>
 
@@ -25,12 +26,18 @@ namespace PPNN
     protected:
         std::shared_ptr<PPGrad::TensorBase<Dim, DT>> W;
         std::shared_ptr<PPGrad::TensorBase<Dim, DT>> b;
+        std::shared_ptr<PPNN::Activation<Dim, DT>> activation;
+
 
     public:
         /// @brief Constructor for Dense layer.
         /// @param inDim Dimension of input tensor.
         /// @param outDim Dimension of output tensor.
-        Dense(int inDim, int outDim, WeightInititializers initializer = WeightInititializers::XAVIER)
+        Dense(
+            int inDim,
+            int outDim,
+            WeightInititializers initializer = WeightInititializers::XAVIER,
+            PPNN::Activations activation = PPNN::Activations::Linear)
         {
             W = PPGrad::Tensor<Dim, DT>::zeros({outDim, inDim}, true);
             b = PPGrad::Tensor<Dim, DT>::zeros({outDim, 1}, true);
@@ -41,6 +48,15 @@ namespace PPNN
 
             params.push_back(W);
             params.push_back(b);
+
+            if (activation == PPNN::Activations::ReLU)
+            {
+                this->activation = std::make_shared<PPNN::ReLU<Dim, DT>>();
+            }
+            else
+            {
+                this->activation = std::make_shared<PPNN::Linear<Dim, DT>>();
+            }
         }
 
         /// @brief Forward function of the model, intended to produce prediction for batched input.
@@ -53,7 +69,8 @@ namespace PPNN
 
             for (std::shared_ptr<PPGrad::TensorBase<Dim, DT>> input : inputs)
             {
-                std::shared_ptr<PPGrad::TensorBase<Dim, DT>> output = (W * input) + b; // PPGrad magic!
+                std::shared_ptr<PPGrad::TensorBase<Dim, DT>> output = this->activation->operator()((W * input) + b); // PPGrad magic!
+
                 outputs.push_back(output);
             }
             return outputs;

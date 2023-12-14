@@ -47,3 +47,10 @@ double LMultSumShapes(std::vector<Eigen::Tensor<double, 2>> inputTensors);
 /// @param autoBackward Whether or not to call _backward() on each tensor automatically.
 /// @return Vector of intermediate tensors.
 std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LMultSumShapes(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors, bool autoBackward = false);
+
+
+
+double LSumReLU(std::vector<Eigen::Tensor<double, 2>> inputTensors);
+
+
+std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> LSumReLU(std::vector<std::shared_ptr<PPGrad::TensorBase<2, double>>> inputTensors);
