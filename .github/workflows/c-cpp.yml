@@ -14,10 +14,17 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install gtest manually
-      run: sudo apt-get install libgtest-dev && cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make && sudo cp lib/*.a /usr/lib && sudo ln -s /usr/lib/libgtest.a /usr/local/lib/libgtest.a && sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/libgtest_main.a
-    - name: install dependencies
-      run: sudo apt update && sudo apt install -y libeigen3-dev openmpi-bin
-    - name: make
-      run: make
+      run: |
+        sudo apt-get install -y libgtest-dev cmake
+        mkdir -p $HOME/build
+        cd $HOME/build
+        sudo cmake /usr/src/googletest/googletest
+        sudo make
+        sudo cp lib/libgtest* /usr/lib/
+        cd ..
+        sudo rm -rf build
+        sudo mkdir /usr/local/lib/googletest
+        sudo ln -s /usr/lib/libgtest.a /usr/local/lib/googletest/libgtest.a
+        sudo ln -s /usr/lib/libgtest_main.a /usr/local/lib/googletest/libgtest_main.a      
     - name: make tests
       run: make tests
