@@ -1,6 +1,8 @@
 # PPGrad
 C++ &amp; OpenMPI &amp; OpenMP toy framework for Neural Nets (a la [Micrograd](https://github.com/karpathy/micrograd)) created in approx. 7 days of scattered work as a semestral project.
 
+Simple evaluation at the end of semester can be found in [PPGrad.pdf](PPGrad.pdf). The goal was to teach myself how Autograd works (in principle) and try building simple NN Library on top of it. Also GitHub actions party, Doxygen learning, Google Test learning and few other little things.
+
 # Initial Plan
 
 The goal is to create distributed (OpenMPI) and parallelized (OpenMP) C++ framework (called "PPGrad") that would provide modular building blocks of Neural Networks (such as Conv2D Layer, Dense Layer, AdamW Optimizer, ReLU activation) and would allow to run the training in a Data distributed fashion.
